@@ -4,76 +4,110 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
 
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
     <title>All Tags</title>
+
+    <link rel = "stylesheet" type = "text/css" href = "/css/account-edit.css">
+    <meta charset="ISO-8859-1">
+    <link th:rel="stylesheet" th:href="@{/css/dashPageStyle.css}">
+    <link th:rel="stylesheet" th:href="@{/css/gradientBg.css}">
+    <link th:rel="stylesheet" th:href="@{/css/allActivitiesStyling.css}">
     <link th:rel="stylesheet" th:href="@{/css/dashPageStyle.css}">
     <link th:rel="stylesheet" th:href="@{/css/bootstrap.css}">
     <link th:rel="stylesheet" th:href="@{/css/tableStyling.css}">
-    <style>
-        font-family: "Karla", sans-serif;
-    </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <script src="https://kit.fontawesome.com/d312da903a.js" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500&display=swap" rel="stylesheet">
+    <link th:rel="stylesheet" th:href="@{/css/contentMargin.css}">
+
+
+    <script th:src="@{/js/bootstrap.js}"></script>
+
+
+    <meta charset="UTF-8">
+
+<style>
+    @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+    h3 {
+        font-family:"Open Sans",sans-serif;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        margin-left: 38px;
+        top: -15px;
+        transform: rotate(270deg);
+        z-index:99;
+        color:white;
+    }
+</style>
 </head>
 <body>
 <div th:replace="navbar.html :: header"></div>
-<div th:replace="snackbar.html :: body"></div>
-<div id="content-pane">
-    <div class = "card">
-        <h2 class = "display-1" id = "tagHeader" >All Tags</h2>
-        <p class = "lead">A view of all tags currently available for use!</p>
-        <hr class = "my-4">
-        <a sec:authorize="hasRole('ROLE_USER')" class = "btn btn-primary btn-lg" href = "/user/create-tag" role = "button">Create tag</a>
-        <a sec:authorize="hasRole('ROLE_ADMIN')" class = "btn btn-primary btn-lg" href = "/admin/create-tag" role = "button">Create tag</a>
-    </div>
+<!--<div id="content-pane">-->
+<!--    <div class = "card">-->
+<div class="list">
+    <div class="content-pane">
+        <div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
+            <div class="well profile" id="container-box">
+                <h1 align="center">All Tags</h1><hr style="background-color:#333;height:0.5px;">
+                <p class = "lead">A view of all tags currently available for use!</p>
+                <hr class = "my-4">
+                <a sec:authorize="hasRole('ROLE_USER')" class = "btn btn-primary btn-lg"
+                   href = "/user/create-tag" role = "button">Create tag</a>
+                <a sec:authorize="hasRole('ROLE_ADMIN')" class = "btn btn-primary btn-lg"
+                   href = "/admin/create-tag" role = "button">Create tag</a>
+            </div>
+            <div class = "list-group">
+            <div  id = "tagTable" class = "list-group-item">
+                <h2>Official Tags</h2>
+                <table class = "table table-responsive">
+                    <thead class = "thead-dark">
+                    <tr>
+                        <th scope = "col">Tag</th>
+                        <th scope = "col">Description</th>
+                    </tr>
+                    </thead>
+                    <tr th:each = "tag : ${tags}" >
+                        <td th:if = "${tag.isOfficial}" th:text = "${tag.tagName}"></td>
+                        <td th:if = "${tag.isOfficial}" th:text = "${tag.description}"></td>
 
-    <div  id = "tagTable">
-        <h2>Official Tags</h2>
-        <table class = "table table-responsive">
-            <thead class = "thead-dark">
-            <tr>
-                <th scope = "col">Tag</th>
-                <th scope = "col">Description</th>
-            </tr>
-            </thead>
-            <tr th:each = "tag : ${tags}" >
-                <td th:if = "${tag.isOfficial}" th:text = "${tag.tagName}"></td>
-                <td th:if = "${tag.isOfficial}" th:text = "${tag.description}"></td>
+                    </tr>
+                </table>
+            </div>
+            <div id = "tagTable2" class = "list-group-item">
+                <h2>Custom Tags</h2>
+                <table class = "table table-responsive" >
+                    <thead class = "thead-dark">
+                    <tr>
+                        <th scope = "col">Tag</th>
+                        <th scope = "col">Description</th>
+                    </tr>
+                    </thead>
+                    <tr th:each = "tag : ${tags}">
+                        <td th:unless = "${tag.isOfficial}" th:text = "${tag.tagName}"></td>
+                        <td th:unless = "${tag.isOfficial}" th:text = "${tag.description}"></td>
+                        <td th:unless = "${tag.isOfficial}" sec:authorize="hasRole('ROLE_ADMIN')">
+                            <form class = "delete-form" th:action="@{/admin/delete-tag}" enctype="multipart/form-data" method="post" th:object="${editForm}">
+                            <input type = "hidden" th:name="id" th:value = "${tag.tagID}"/>
+                            <input type = "hidden" th:name="edit" th:value = "${tag.tagName}"/>
+                            <button type = "submit" class = "btn btn-secondary " name="action" value = "remove ">
+                                Remove Tag
+                            </button>
+                            </form>
+                        </td>
 
-            </tr>
-        </table>
-    </div>
-    <div id = "tagTable2">
-        <h2>Custom Tags</h2>
-        <table class = "table table-responsive" >
-            <thead class = "thead-dark">
-            <tr>
-                <th scope = "col">Tag</th>
-                <th scope = "col">Description</th>
-            </tr>
-            </thead>
-            <tr th:each = "tag : ${tags}">
-                <td th:unless = "${tag.isOfficial}" th:text = "${tag.tagName}"></td>
-                <td th:unless = "${tag.isOfficial}" th:text = "${tag.description}"></td>
-                <td th:unless = "${tag.isOfficial}" sec:authorize="hasRole('ROLE_ADMIN')">
-                    <form class = "delete-form" th:action="@{/admin/delete-tag}" enctype="multipart/form-data" method="post" th:object="${editForm}">
-                    <input type = "hidden" th:name="id" th:value = "${tag.tagID}"/>
-                    <input type = "hidden" th:name="edit" th:value = "${tag.tagName}"/>
-                    <button type = "submit" class = "btn btn-secondary " name="action" value = "remove ">
-                        Remove Tag
-                    </button>
-                    </form>
-                </td>
-
-            </tr>
-        </table>
-
+                    </tr>
+                </table>
+            </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
