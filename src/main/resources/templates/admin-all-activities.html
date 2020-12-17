@@ -69,6 +69,7 @@
                         <p th:text = "${activity.description}"></p>
                         <input type = "hidden" th:name="activityJoinID" th:value = "${activity.activityID}"/>
                         <span th:text = "'total participants: '+ ${totalParticipants[iterStat.index]}"></span>
+                        <span th:text = "'average rating: '+ ${rating}"></span>
                         <span style = "float:right;" th:text = "'Percentage of users: ' + ${partPercentages[iterStat.index]} + '%'"></span>
                     </div>
                         <h3  th:unless = "${activity.isOfficial}"  style="z-index:10;color: black" >Custom</h3>

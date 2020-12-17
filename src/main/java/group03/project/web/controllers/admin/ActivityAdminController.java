@@ -4,9 +4,11 @@ import group03.project.domain.*;
 import group03.project.services.offered.*;
 import group03.project.web.forms.ActivityCreationForm;
 import group03.project.web.forms.ActivityJoinForm;
+import group03.project.web.lists.ActivityRating;
 import group03.project.web.lists.ReflectList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -102,6 +105,8 @@ public class ActivityAdminController {
     @GetMapping("/activities-signup-list")
     public String listActivities(Model model, Authentication authentication) {
         List<Activity> activities = activityService.findAllActivities();
+        List<Participation> participations = participationService.findAllParticipations();
+        List<Reflection> reflections = reflectionService.findAllReflections();
         List<Participation> allParticipations = participationService.findAllParticipations();
         List<SiteUser> allUsers = siteUserService.findAllUsers();
 
@@ -115,7 +120,6 @@ public class ActivityAdminController {
             DecimalFormat df = new DecimalFormat("0");
 
             for (Participation participation : allParticipations) {
-                System.out.println("id: " + participation.getParticipationID());
                 if (participation.getActivityID().equals(activity.getActivityID())) {
                     partCounter++;
 
@@ -155,6 +159,49 @@ public class ActivityAdminController {
                 }
             }
 
+
+        List<ActivityRating> activityRatings = new ArrayList<>();
+        List<Long> activityIDList = new ArrayList<>();
+        List<Long> participationIDList = new ArrayList<>();
+
+        for(int i = 0; i < activities.size(); i++) {
+
+            Activity currentActivity = activities.get(i);
+            ActivityRating currentRating = new ActivityRating();
+            currentRating.setActivityID(currentActivity.getActivityID());
+
+            for(int x = 0; x < participations.size(); x++) {
+
+                Participation currentParticipation = participations.get(x);
+
+                if(currentParticipation.getActivityID() == currentActivity.getActivityID()) {
+
+                    currentRating.setParticipationID(currentParticipation.getParticipationID());
+
+                    for(int y = 0; y < reflections.size(); y++) {
+
+                        Reflection currentReflection = reflections.get(y);
+
+                        if(currentReflection.getParticipationID() == currentParticipation.getParticipationID()) {
+                            Integer oldValue = currentRating.getRatingavg();
+                            Integer newValue;
+                            if(currentReflection.getRating() != null) {
+                                if(oldValue == null) {
+                                    newValue = currentReflection.getRating().intValue();
+                                } else {
+                                    newValue = (oldValue + currentReflection.getRating().intValue()) / 2;
+                                }
+                                currentRating.setRatingavg(newValue);
+                                activityRatings.add(currentRating);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        System.out.println(activityRatings);
+
         for (Double value : tempPartCount) {
             participationCount.add(value.intValue());
         }
@@ -165,6 +212,7 @@ public class ActivityAdminController {
         model.addAttribute("totalParticipants", participationCount);
         model.addAttribute("partPercentages", participationPercentage);
         model.addAttribute("allActivities", activities);
+        model.addAttribute("ratings", activityRatings);
         return "admin-all-activities";
     }
 
