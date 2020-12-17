@@ -20,7 +20,6 @@ public class Reflection {
     @Column(name="reflectionID", nullable = false, unique = true)
     private Long reflectionID;
 
-    @NonNull
     @Column(name="Participation_participationID", nullable = false)
     private Long participationID;
 
