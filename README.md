@@ -33,7 +33,7 @@ cd group-03-staff-project
 java -jar "build/libs/group-03-staff-project -0.0.1-SNAPSHOT.jar"
 
 #Alternate option via gradle
-./gradlew bootrun
+.\gradlew bootrun
 
 ```
 ##### 5. Accessing application
