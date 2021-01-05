@@ -1,8 +1,13 @@
-# group-03-Reflection-toolkit #
+# Reflection toolkit (Group 03)
 
-## INSTRUCTIONS ##
-Before running the application, seperately run the schema-sql.sql and the data.sql externally on MySQL workbench.
+## Setup
 
+```bash
+# Cloning repository
+git clone https
+
+
+```
 ## LOGGING INTO APPLICATION ##
 ## username: david112
 password: bigboss
