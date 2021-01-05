@@ -1,5 +1,7 @@
 # Reflection toolkit (Group 03)
 
+<div class="boxBorder">
+
 ## Code Setup
 
 ##### 1. Initial clone 
@@ -8,12 +10,14 @@
 git clone https://git.cardiff.ac.uk/c1936922/group-03-staff-project.git
 ```
 
-##### 2. Run the following scripts within MySQL Workbench in order:
-
-
+##### 2. Open MySQL & run following scripts from repository:
 
 - schema-sql.sql
 - data-sql.sql
+
+These can be found inside folder from filepath: group-03-staff-project\src\main\resources.
+
+Server uses SQL by default, whereas tests are performed using H2 (script not required to run).
 
 ##### 3. Build server
 ```bash
@@ -23,38 +27,32 @@ cd group-03-staff-project
 # Build Gradle server 
 ./gradlew build
 ```
+##### 4. Launch application
+```bash
+# Launch application
+./gradlew bootrun
 
-Server uses SQL by default, whereas tests are performed using H2.
+```
+##### 5. Accessing application
 
-
+navigate to address localhost:8080. Accounts are provided below for view of dummy data. 
+</div>
 
 ## Login ##
-#### username: david112
-password: bigboss
-<br/>roles: User
 
-###### use case:
-viewing dummy data of finished user
-<br/>creation of custom activities 
-<br/>Participating on an activity via provided list
-<br/>reflecting on a participated activity
-
-#### username: user
-password: passw
-<br/>roles: User
-
-##### use case:
-viewing dummy data of finished user
-<br/>creation of custom activities 
-<br/>Participating on an activity via provided list
-<br/>reflecting on a participated activity
-
-#### username: admin
-password: pass
-<br/>roles: Admin
-
-##### use case:
-creating official activities
-<br/>viewing averages of data provided by users
-<br/>creating official tags.
-
+| Username | Password | Role | Use Case |
+| ---------| -------- | ---- | -------- |
+| david112 | bigboss  | USER | Custom activity & Tag creation |
+|  |  |  | viewing dummy data of user progressing in app |
+|  |  |  | Participating in activities via list |
+|  |  |  | Reflecting on participated activity |
+|  |  |  | Viewing of visual progress graphs |
+| user | passw | USER | custom activity & Tag creation |
+|  |  |  | viewing dummy data of user progressing in app |
+|  |  |  | participating in activities via list |
+|  |  |  | Reflecting on participated activity |
+|  |  |  | Viewing of visual progress graphs |
+| admin | pass  | ADMIN | Official activity creation |
+|  |  |  | viewing averages of tag completion provided by users |
+|  |  |  | viewing averages of activity participation rates via user data |
+|  |  |  | official tag creation |
