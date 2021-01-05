@@ -67,10 +67,14 @@ public class ActivityTest {
 
         Activity customActivity = new Activity("activityTest", "an activity test");
 
-
         activityService.save(customActivity);
+        tagService.save(new Tag(null, "Motivational"));
 
         Activity savedActivity = activityService.findByName("activityTest").get();
+
+        for (Tag tag: tagService.findAll()) {
+            System.out.println(tag);
+        }
 
 
         Objective newObj = new Objective(savedActivity, tagService.findByTagName("Motivational").get());

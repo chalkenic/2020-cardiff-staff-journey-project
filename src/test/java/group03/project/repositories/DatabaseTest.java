@@ -25,7 +25,7 @@ public class DatabaseTest {
     private RoleRepository roleRepository;
 
     @Test
-    public void shouldReturnThreeUsers() throws Exception {
+    public void shouldReturnFourUsers() throws Exception {
 
         List<SiteUser> siteUsers = userRepository.findAll();
 

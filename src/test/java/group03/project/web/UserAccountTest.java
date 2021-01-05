@@ -123,7 +123,7 @@ public class UserAccountTest {
 
         mvc.perform(get("/dashboard"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("Your Recent Activities")));
+                .andExpect(content().string(containsString("Your activities")));
 
     }
 
@@ -151,12 +151,13 @@ public class UserAccountTest {
 
     @Test
     @DisplayName("User can see a list of their uncompleted tags on dashboard")
-    @WithMockUser(username = "user", password = "password1", roles = "USER")
+    @WithMockUser(username = "user", password = "passw", roles = "USER")
     public void shouldSeeUncompletedTagsListOnDash() throws Exception {
 
         mvc.perform(get("/dashboard"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("Uncompleted UKPSF Tags")));
+                .andExpect(content().string(containsString("UKPSF Tags incomplete")))
+                .andExpect(content().string(containsString("A1")));
 
     }
 }

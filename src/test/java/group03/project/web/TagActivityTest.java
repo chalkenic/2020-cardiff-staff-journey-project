@@ -2,6 +2,7 @@ package group03.project.web;
 
 import group03.project.domain.Activity;
 import group03.project.domain.Objective;
+import group03.project.domain.Tag;
 import group03.project.services.offered.ActivityService;
 import group03.project.services.offered.ObjectiveService;
 import group03.project.services.offered.TagService;
@@ -44,6 +45,8 @@ public class TagActivityTest {
     @DisplayName("User is presented with custom thoughts on page open")
     public void shouldHaveCustomThoughtsPresent() throws Exception {
 
+        tagService.createCustomTag(new Tag(null, "Motivational", false));
+
         this.mvc
                 .perform(get("/user/add-custom-activity"))
                 .andDo(print())
@@ -56,7 +59,7 @@ public class TagActivityTest {
     @WithMockUser(username="admin", password="pass", roles = "ADMIN")
     public void shouldFindCustomTagInDatabaseRelatingToObjective() throws Exception {
 
-
+        tagService.createCustomTag(new Tag("Motivational", "is Motivational", false));
         Activity anActivity =  new Activity( "Example Name 1",  "Example Desc" );
         Activity theTestActivity =  new Activity( "Test Activity",  "A better activity" );
         Objective relatedObjective = new Objective(theTestActivity, tagService.findATagByName("Motivational").get());

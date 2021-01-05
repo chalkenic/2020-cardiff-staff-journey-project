@@ -45,14 +45,18 @@ public class ReflectionTest {
 
         participationRepository.save(testParticipation);
 
+        List<Participation> participations = participationRepository.findAll();
+
+        Participation theParticipation = participations.get(participations.size() - 1);
+
         String reflect_what = "Test Reflect_What";
 
-        Reflection testReflection = new Reflection(null, testParticipation.getParticipationID(), 1L, reflect_what, "Test", "Test", "Test", "Test", "Test", false, null);
+        Reflection testReflection = new Reflection(null, theParticipation.getParticipationID(), 1L, reflect_what, "Test", "Test", "Test", "Test", "Test", false, null);
 
         reflectionRepository.save(testReflection);
-        System.out.println(testParticipation.getParticipationID().getClass());
 
-        Optional<Reflection> findTest = reflectionRepository.findByReflectionID(testParticipation.getParticipationID());
+        Optional<Reflection> findTest = reflectionRepository.findByParticipationID(theParticipation.getParticipationID());
+        System.out.println(findTest);
 
         assertEquals(reflect_what, findTest.get().getReflect_what());
     }
@@ -118,7 +122,9 @@ public class ReflectionTest {
         Reflection testReflection = new Reflection(null, testParticipation.getParticipationID(), 1L, "Test", "Test", "Test", "Test", "Test", "Test", true, rating);
         reflectionRepository.save(testReflection);
 
-        Reflection reflection = reflectionRepository.findAll().get(0);
+        List<Reflection> reflections = reflectionRepository.findAll();
+
+        Reflection reflection = reflections.get(reflections.size() - 1);
 
         assertEquals(rating, reflection.getRating());
     }

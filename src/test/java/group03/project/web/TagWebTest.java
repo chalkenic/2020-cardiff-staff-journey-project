@@ -2,6 +2,7 @@ package group03.project.web;
 
 
 import group03.project.TestSupport;
+import group03.project.config.LoginDetailsService;
 import group03.project.domain.Tag;
 import group03.project.services.required.TagRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -22,8 +25,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-@AutoConfigureTestDatabase
 @AutoConfigureMockMvc
+@AutoConfigureTestDatabase
 public class TagWebTest {
 
     @Autowired
@@ -31,6 +34,9 @@ public class TagWebTest {
 
     @Autowired
     private TagRepository repository;
+
+    @MockBean
+    private LoginDetailsService loginService;
 
     @Test
     @DisplayName("Admin is presented all tags from hardcoded datasource")
@@ -48,10 +54,12 @@ public class TagWebTest {
     @WithMockUser(username="user", password = "password1", roles = "ADMIN")
     public void shouldPresentUserWithCustomTags() throws Exception {
 
+        repository.save(new Tag(null, "custom tag", "a custom test tag", false));
+
         mvc.perform(get("/user/all-tags"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("worked well")))
-                .andExpect(content().string(containsString("I felt I worked well during this activity")));
+                .andExpect(content().string(containsString("custom tag")))
+                .andExpect(content().string(containsString("a custom test tag")));
     }
 
     @Test
@@ -59,9 +67,7 @@ public class TagWebTest {
     @WithMockUser(username="user", password = "password1", roles = "USER")
     public void shouldSeeCustomTagOnPageWhenCreated() throws Exception {
 
-        Tag newTag = new Tag(null, "test", "tester tag", false);
-
-        repository.save(newTag);
+        repository.save(new Tag(null, "test", "tester tag", false));
 
         mvc.perform(get("/user/all-tags"))
                 .andExpect(status().isOk())
@@ -73,6 +79,8 @@ public class TagWebTest {
     @WithMockUser(username="user", password = "password1", roles = "USER")
     public void shouldNotSeeDeleteButtonAsUser() throws Exception {
 
+        repository.save(new Tag(null, "test", "tester tag", false));
+
         mvc.perform(get("/user/all-tags"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(TestSupport.doesNotContainString("Remove")));
@@ -82,6 +90,8 @@ public class TagWebTest {
     @Test
     @WithMockUser(username="user", password = "password1", roles = "ADMIN")
     public void shouldSeeDeleteButtonAsAdmin() throws Exception {
+
+        repository.save(new Tag(null, "test", "tester tag", false));
 
         mvc.perform(get("/admin/all-tags"))
                 .andExpect(status().isOk())

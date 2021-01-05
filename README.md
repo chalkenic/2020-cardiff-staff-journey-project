@@ -13,7 +13,7 @@ git clone https://git.cardiff.ac.uk/c1936922/group-03-staff-project.git
 
 
 - schema-sql.sql
-- data.sql
+- data-sql.sql
 
 ##### 3. Build server
 ```bash

@@ -13,4 +13,6 @@ public interface ReflectionRepository {
 
     Optional<Reflection> findByReflectionID(Long id);
 
+    Optional<Reflection> findByParticipationID(Long id);
+
 }

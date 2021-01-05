@@ -19,10 +19,7 @@ public class TagCreationTest {
     @Test
     public void AddOneTagToListOfTags() throws Exception {
 
-        Tag tag1 = new Tag(null, "b12", "a new tag", true);
-
-
-        tagRepository.save(tag1);
+        tagRepository.save(new Tag(null, "b12", "a new tag", true));
 
         Optional<Tag> theTag = tagRepository.findByTagName("b12");
         System.out.println(theTag);
@@ -33,20 +30,15 @@ public class TagCreationTest {
     @Test
     public void addThreeTagsAndSearchByOfficialStatus() throws Exception {
 
-        Tag tag1 = new Tag(null, "b12", "a new tag", true);
-        Tag tag2 = new Tag(null, "c8", "a newer tag", false);
-        Tag tag3 = new Tag(null, "A6", "the newest tag", true);
-
-
-        tagRepository.save(tag1);
-        tagRepository.save(tag2);
-        tagRepository.save(tag3);
+        tagRepository.save(new Tag(null, "b12", "a new tag", true));
+        tagRepository.save(new Tag(null, "c8", "a newer tag", false));
+        tagRepository.save(new Tag(null, "A6", "the newest tag", true));
 
         List<Tag> allOfficialTags = tagRepository.findByIsOfficial(true);
         List<Tag> allCustomTags = tagRepository.findByIsOfficial(false);
-        // Correct with fresh database.
+        // Correct with H2 database - all official tags are entered by default.
         assertEquals(18, allOfficialTags.size());
-        // Correct with fresh database.
-        assertEquals(17, allCustomTags.size());
+        // Correct with fresh database - no custom tags created outside of test.
+        assertEquals(1, allCustomTags.size());
     }
 }
