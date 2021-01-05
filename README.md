@@ -2,7 +2,7 @@
 
 <div class="boxBorder">
 
-## Code Setup - complete via Command Prompt
+## Code Setup - complete via Command Prompt/Git Bash
 
 ##### 1. Initial clone 
 ```bash
