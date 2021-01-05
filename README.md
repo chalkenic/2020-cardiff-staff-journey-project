@@ -1,40 +1,60 @@
 # Reflection toolkit (Group 03)
 
-## Setup
+## Code Setup
 
+##### 1. Initial clone 
 ```bash
-# Cloning repository
-git clone https
-
-
+# Clone repository
+git clone https://git.cardiff.ac.uk/c1936922/group-03-staff-project.git
 ```
-## LOGGING INTO APPLICATION ##
-## username: david112
+
+##### 2. Run the following scripts within MySQL Workbench in order:
+
+
+
+- schema-sql.sql
+- data.sql
+
+##### 3. Build server
+```bash
+# Navigate into directory folder
+cd group-03-staff-project
+
+# Build Gradle server 
+./gradlew build
+```
+
+Server uses SQL by default, whereas tests are performed using H2.
+
+
+
+## Login ##
+#### username: david112
 password: bigboss
 <br/>roles: User
 
-**use case:**
-<br/>viewing dummy data of finished user
+###### use case:
+viewing dummy data of finished user
 <br/>creation of custom activities 
 <br/>Participating on an activity via provided list
 <br/>reflecting on a participated activity
 
-## username: user
+#### username: user
 password: passw
 <br/>roles: User
 
-**use case:**
-<br/>viewing dummy data of finished user
+##### use case:
+viewing dummy data of finished user
 <br/>creation of custom activities 
 <br/>Participating on an activity via provided list
 <br/>reflecting on a participated activity
 
-## username: admin
+#### username: admin
 password: pass
 <br/>roles: Admin
 
-**use case:**
-<br/>creating official activities
+##### use case:
+creating official activities
 <br/>viewing averages of data provided by users
 <br/>creating official tags.
 
