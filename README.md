@@ -29,7 +29,10 @@ cd group-03-staff-project
 ```
 ##### 4. Launch application
 ```bash
-# Launch application
+# Launch application via jar
+java -jar "build/libs/group-03-staff-project -0.0.1-SNAPSHOT.jar"
+
+#Alternate option via gradle
 ./gradlew bootrun
 
 ```
