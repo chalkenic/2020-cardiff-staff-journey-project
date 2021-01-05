@@ -37,7 +37,6 @@ dependencies {
 
 
 	runtime 'com.h2database:h2'
-
 	runtime 'org.mariadb.jdbc:mariadb-java-client:2.7.0'
 
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -50,6 +49,12 @@ dependencies {
 	testCompile 'com.structurizr:structurizr-core:1.6.2'
 	testCompile 'com.structurizr:structurizr-client:1.6.2'
 	testCompile 'com.structurizr:structurizr-spring:1.3.5'
+	testCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.13.0'
+	testCompile group: 'org.seleniumhq.selenium', name: 'selenium-support', version: '3.13.0'
+	testCompile group: 'org.seleniumhq.selenium', name: 'selenium-remote-driver', version: '3.13.0'
+	testCompile group: 'org.seleniumhq.selenium', name: 'selenium-edge-driver', version: '3.13.0'
+	testCompile group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version: '3.13.0'
+	testCompile group: 'org.seleniumhq.selenium', name: 'selenium-htmlunit-driver', version: '2.52.0'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compile('javax.servlet:jstl')
