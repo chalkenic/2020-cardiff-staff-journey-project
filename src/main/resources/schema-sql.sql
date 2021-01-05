@@ -158,43 +158,44 @@ GRANT INSERT, UPDATE, DELETE, SELECT ON developmentToolkit.participation TO 'sit
 -- -----------------------------------------------------
 -- Participation Insert
 -- -----------------------------------------------------
-DROP TRIGGER IF EXISTS part_insert;
- DELIMITER $$
- CREATE TRIGGER part_insert BEFORE INSERT
- ON participation
- FOR EACH ROW
- 	BEGIN
- 		DECLARE partActID INT;
-        DECLARE checkActID INT;
- 		SET partActID = NEW.Activity_activityID;
-        SET checkActID = (SELECT EXISTS(SELECT activityID FROM activity WHERE activityID = partActID));
-        IF (checkActID != partActID) THEN
- 			INSERT INTO activity (activityID, name, file, description, isOfficial) VALUES (partActID, "Placeholder Activity", "Placeholder URL", "Placeholder Description", false);
- 		END IF;
- 	END$$
-DELIMITER ;
+-- DROP TRIGGER IF EXISTS part_insert;
+--  DELIMITER $$
+--  CREATE TRIGGER part_insert BEFORE INSERT
+--  ON participation
+--  FOR EACH ROW
+--  	BEGIN
+--  		DECLARE partActID INT;
+--         DECLARE checkActID INT;
+--  		SET partActID = NEW.Activity_activityID;
+--         SET checkActID = (SELECT EXISTS(SELECT activityID FROM activity WHERE activityID = partActID));
+--         IF (checkActID != partActID) THEN
+--  			INSERT INTO activity (activityID, name, file, description, isOfficial) VALUES (partActID, "Placeholder Activity", "Placeholder URL", "Placeholder Description", false);
+--  		END IF;
+--  	END$$
+-- DELIMITER ;
+
 
 -- -----------------------------------------------------
 -- Activity Insert
 -- -----------------------------------------------------
-DROP TRIGGER IF EXISTS reflect_insert;
-DELIMITER $$
-CREATE TRIGGER reflect_insert BEFORE INSERT
-ON reflection
-FOR EACH ROW
-	BEGIN
-		DECLARE reflectPartID INT;
-        DECLARE checkPartID INT;
-        DECLARE checkActID INT;
-		SET reflectPartID = NEW.Participation_participationID;
-        SET checkActID = (SELECT EXISTS(SELECT participationID FROM participation WHERE participationID = reflectPartID));
-        IF (reflectPartID != checkPartID) THEN
-			INSERT INTO activity (activityID, name, file, description, isOfficial) VALUES (null, "Placeholder Activity", "Placeholder URL", "Placeholder Description", false);
-            SET checkActID = (SELECT activityID FROM participation WHERE name = "Placeholder Activity");
-            INSERT INTO participation (participationID, date, siteUser_activityID, Activity_activityID, Role_roleID) VALUES (null, null, 0, checkActID, "USER");
-		END IF;
-	END$$
-DELIMITER ;
+-- DROP TRIGGER IF EXISTS reflect_insert;
+-- DELIMITER $$
+-- CREATE TRIGGER reflect_insert BEFORE INSERT
+-- ON reflection
+-- FOR EACH ROW
+-- 	BEGIN
+-- 		DECLARE reflectPartID INT;
+--         DECLARE checkPartID INT;
+--         DECLARE checkActID INT;
+-- 		SET reflectPartID = NEW.Participation_participationID;
+--         SET checkActID = (SELECT EXISTS(SELECT participationID FROM participation WHERE participationID = reflectPartID));
+--         IF (reflectPartID != checkPartID) THEN
+-- 			INSERT INTO activity (activityID, name, file, description, isOfficial) VALUES (null, "Placeholder Activity", "Placeholder URL", "Placeholder Description", false);
+--             SET checkActID = (SELECT activityID FROM participation WHERE name = "Placeholder Activity");
+--             INSERT INTO participation (participationID, date, siteUser_activityID, Activity_activityID, Role_roleID) VALUES (null, null, 0, checkActID, "USER");
+-- 		END IF;
+-- 	END$$
+-- DELIMITER ;
 
 
 -- -----------------------------------------------------
