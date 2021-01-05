@@ -25,7 +25,7 @@ Server uses SQL by default, whereas tests are performed using H2 (script not req
 cd group-03-staff-project
 
 # Build Gradle server 
-./gradlew build
+.\gradlew build
 ```
 ##### 4. Launch application
 ```bash
