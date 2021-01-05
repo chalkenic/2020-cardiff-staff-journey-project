@@ -22,16 +22,6 @@ public class GenerateModel {
 
         final String API_SECRET = "dc29c3b5-7292-4230-90ab-a7e41c701a8d";
 
-//
-//        public static void main(String[] args) {
-//            GenerateModel structurizr = new GenerateModel();
-//            try {
-//                structurizr.generateModel();
-//            } catch (Exception e) {
-//
-//            }
-//        }
-
         // Workspace set up and attached to base model.
         Workspace workspace = new Workspace("Development Reflection Toolkit",
                 "Spring Boot project for Group 3's implementation of the Development Reflection Toolkit");
@@ -82,34 +72,59 @@ public class GenerateModel {
                 .filter(tech -> tech.getTechnology().equals(SpringComponentFinderStrategy.SPRING_REPOSITORY))
                 .forEach(tech -> tech.uses(toolKitRDatabase, "Reads and writes data to Relational database", "JPA"));
 
-        // Testing for existence of components as proof of working.
-        for (Component component : webApp.getComponents()) {
-            System.out.println(component.getRelationships());
-        }
-
+        // finds all generated services stored within container
         Component tagService = webApp.getComponentOfType("group03.project.services.offered.TagService");
         Component siteUserService = webApp.getComponentOfType("group03.project.services.offered.SiteUserService");
         Component activityService = webApp.getComponentOfType("group03.project.services.offered.ActivityService");
         Component participationService = webApp.getComponentOfType("group03.project.services.offered.ParticipationService");
-        Component ReflectionService = webApp.getComponentOfType("group03.project.services.offered.ReflectionService");
-        Component ObjectiveService = webApp.getComponentOfType("group03.project.services.offered.ObjectiveService");
-        Component RoleService = webApp.getComponentOfType("group03.project.services.offered.RoleService");
+        Component reflectionService = webApp.getComponentOfType("group03.project.services.offered.ReflectionService");
+        Component objectiveService = webApp.getComponentOfType("group03.project.services.offered.ObjectiveService");
+        Component roleService = webApp.getComponentOfType("group03.project.services.offered.RoleService");
 
+        // Login details
+
+
+        Component loginDetailsService = webApp.getComponentOfType("group03.project.config.LoginDetailsService");
+        Component homeController = webApp.getComponentOfType("group03.project.web.controllers.HomeController");
+
+        // finds all generated repositories stored within container.
         Component tagRepo = webApp.getComponentOfType("group03.project.repositories.TagRepoJPA");
         Component siteUserRepo = webApp.getComponentOfType("group03.project.repositories.SiteUserRepoJPA");
         Component activityRepo = webApp.getComponentOfType("group03.project.repositories.ActivityRepoJPA");
         Component participationRepo = webApp.getComponentOfType("group03.project.repositories.ParticipationRepoJPA");
         Component reflectionRepo = webApp.getComponentOfType("group03.project.repositories.ReflectRepoJPA");
         Component objectiveRepo = webApp.getComponentOfType("group03.project.repositories.ObjectiveRepoJPA");
-        Component RoleRepo = webApp.getComponentOfType("group03.project.repositories.RoleRepoJPA");
+        Component roleRepo = webApp.getComponentOfType("group03.project.repositories.RoleRepoJPA");
 
+        // creates components that cover overall look of application.
+        webApp.addComponent("Application Style", "project application's base style", "HTTP");
+        webApp.addComponent("BootStrap", "BootStrap implemenation onto web application", "CSS/JS");
+        webApp.addComponent("CSS", "", "Custom styling sheets for web application", "CSS/HTTP");
+        webApp.addComponent("JavaScript", "JavaScript functionality into web application", "JavaScript/HTTP");
+
+        // finds generated styles within container
+        Component appStyle = webApp.getComponentWithName("Application Style");
+        Component bootstrap= webApp.getComponentWithName("BootStrap");
+        Component css = webApp.getComponentWithName("CSS");
+        Component javascript = webApp.getComponentWithName("JavaScript");
+
+        // Application style comes from variety of different sources.
+        appStyle.uses(bootstrap, "uses");
+        appStyle.uses(css, "uses");
+        appStyle.uses(javascript, "uses");
+
+        // All services use a designated repository.
         tagService.uses(tagRepo, "uses");
         siteUserService.uses(siteUserRepo, "uses");
         activityService.uses(activityRepo, "uses");
         participationService.uses(participationRepo, "uses");
-        ReflectionService.uses(reflectionRepo, "uses");
-        ObjectiveService.uses(objectiveRepo, "uses");
-        RoleService.uses(RoleRepo, "uses");
+        reflectionService.uses(reflectionRepo, "uses");
+        objectiveService.uses(objectiveRepo, "uses");
+        roleService.uses(roleRepo, "uses");
+
+        // Login has specific route.
+        homeController.uses(loginDetailsService, "uses");
+        loginDetailsService.uses(siteUserRepo, "uses");
 
 
 
