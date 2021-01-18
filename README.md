@@ -17,7 +17,8 @@ git clone https://git.cardiff.ac.uk/c1936922/group-03-staff-project.git
 
 These can be found inside folder from filepath: group-03-staff-project\src\main\resources.
 
-Server uses SQL by default, whereas tests are performed using H2 (script not required to run).
+- Server uses SQL by default, please make sure .sql files are used 
+- All tests are performed using H2 (H2 scripts inside test folder not required for main application usage).
 
 ##### 3. Build server
 ```bash
