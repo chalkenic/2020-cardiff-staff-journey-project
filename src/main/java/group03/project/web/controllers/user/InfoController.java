@@ -66,7 +66,6 @@ public class InfoController {
     public String changeEmailAddress(@ModelAttribute("editForm") @Valid EditForm nameForm,
                                      BindingResult result) {
 
-        System.out.println("test1");
 
         if(!result.hasErrors()) {
             try {
@@ -80,11 +79,9 @@ public class InfoController {
 
                  */
             } catch (TransactionSystemException  e)  {
-                System.out.println("testfail1");
                 return "redirect:/user/account";
             }
         } else {
-            System.out.println("testfail2");
             return "redirect:/user/account";
         }
 
