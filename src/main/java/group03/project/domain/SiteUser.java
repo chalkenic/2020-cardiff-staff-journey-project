@@ -39,7 +39,7 @@ public class SiteUser {
 
 
     public SiteUser(String anEmailAddress, String aPassword, String aUsername) {
-        this(null,  anEmailAddress , aPassword, aUsername, null, null);
+        this(null,  anEmailAddress , aPassword, aUsername, true, null);
         this.permissions = "ROLE_USER";
     }
 

@@ -17,15 +17,17 @@ import java.sql.SQLException;
 @Controller
 public class RegistrationController {
 
-
-    private SiteUserService accountService;
-    private PasswordEncoder encoder;
-
+    private final SiteUserService accountService;
+    private final PasswordEncoder encoder;
+    /**
+     *
+     * @param aService - Selected application service for controller usage.
+     * @param theEncoder - BCrypt password encoder bean defined within SecurityConfig class
+     */
     @Autowired
     public RegistrationController(SiteUserService aService, PasswordEncoder theEncoder) {
         encoder = theEncoder;
         accountService = aService;
-
     }
 
     @GetMapping("/register")
@@ -44,23 +46,28 @@ public class RegistrationController {
         if(!result.hasErrors()) {
 
             try {
-
-
+                /*
+                Ensure that both passwords entered match
+                 */
                 if (accountForm.getPassword().equals(accountForm.getMatchingPassword())) {
 
+                    /*
+                        Create a new siteUser object & apply form data into it.
+                     */
                     SiteUser newUser;
-
                     newUser = createAccount(accountForm, result);
-
                     accountService.createAUser(newUser);
 
+                    /*
+                        On successful user creation, redirect back to main page.
+                     */
                     return "redirect:/";
 
                 } else {
                     return "redirect:register";
                 }
                 /**
-                 * Catches any errors made via JPA addition.
+                 * Catches any errors made when appending to database via JPA.
                  */
             } catch (Exception e) {
                 System.out.println("That username is taken; please try again");

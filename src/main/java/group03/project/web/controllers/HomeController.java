@@ -44,7 +44,12 @@ public class HomeController {
      * @return login form for localhost;
      */
     @GetMapping("/")
-    public String navigateToRootPage() {
+    public String navigateToRootPage(Model model) {
+
+        String message = "";
+
+        model.addAttribute("message", message);
+
         return "login";
     }
 
@@ -228,7 +233,7 @@ public class HomeController {
      * @return redirection to localhost:8080 page
      */
     @GetMapping("/logout")
-    public String HandleLogout(HttpServletRequest request, HttpServletResponse response) {
+    public String HandleLogout(HttpServletRequest request, HttpServletResponse response, Model model) {
         /*
           Collects current authentication found in session.
          */
@@ -241,7 +246,13 @@ public class HomeController {
         /*
           Redirect user back to initial localhost:8080.
          */
-        return "redirect:";
+        /*
+          Provide message to front-end indicating logout successful
+         */
+        String loggedOut = "loggedOut";
+
+        model.addAttribute("message", loggedOut);
+        return "/login";
     }
 
     /**
@@ -249,10 +260,16 @@ public class HomeController {
      * @return redirection back to application root.
      */
     @PostMapping("/failed-login")
-    public String handleFailedLogin(HttpServletRequest request) {
+    public String handleFailedLogin(HttpServletRequest request, Model model) {
 
-//        if(request.getHeader("referer") != null) {
-            return "redirect:" + request.getHeader("referer");
+            String loginFailure = "failedLogin";
+
+            model.addAttribute("message", loginFailure);
+
+            return "/login";
+
+
+//            return "redirect:" + request.getHeader("referer");
 //        }
 //        /**
 //         * returns user back to initial localhost:8080
