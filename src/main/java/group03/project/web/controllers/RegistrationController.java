@@ -112,6 +112,11 @@ public class RegistrationController {
                                    BindingResult result) {
         SiteUser newUser;
 
+        /**
+         * Regex pattern sourced from OWASP's Validation Regex Repository complex password. Available at:
+         * https://owasp.org/www-community/OWASP_Validation_Regex_Repository
+         */
+
         String regexPtrn = "(?:(?=.*\\d)" +
                 "(?=.*[A-Z])" +
                 "(?=.*[a-z])|(?=.*\\d)" +

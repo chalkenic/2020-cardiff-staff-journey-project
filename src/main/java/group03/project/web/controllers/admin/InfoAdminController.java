@@ -123,9 +123,6 @@ private final SiteUserService userService;
                                 BindingResult result) {
         if(!result.hasErrors()) {
 
-            System.out.println("edit: " + userForm.getEdit());
-            System.out.println("id: " + userForm.getId());
-
             SiteUser selectedUser = userService.findUserById(Long.parseLong(userForm.getId())).get();
 
             userService.deleteSelectedUser(selectedUser.getUserID());
