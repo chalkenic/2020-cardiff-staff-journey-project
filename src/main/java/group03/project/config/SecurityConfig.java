@@ -69,6 +69,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/register").permitAll()
                 .and()
+                .exceptionHandling().accessDeniedPage("/403-error")
+                .and()
                 /*
                     Default spring login page to /login. Allow all users access.
                  */
@@ -89,6 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/logout")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID");
+;
 
     }
 

@@ -55,4 +55,11 @@ public interface SiteUserService {
      */
     public void deleteSelectedUser(Long userID);
 
+    /**
+     * Check if user exists in system
+     * @param username - user name to check
+     * @return confirmation if exists already.
+     */
+    public boolean checkIfNewUserExists(String username);
+
 }

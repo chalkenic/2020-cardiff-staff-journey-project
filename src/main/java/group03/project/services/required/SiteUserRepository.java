@@ -17,6 +17,8 @@ public interface SiteUserRepository {
 
      Optional<SiteUser> findByPermissions(String permissions);
 
+     boolean existsByUserName(String username);
+
      SiteUser save(SiteUser aSiteUser);
 
      void deleteById(Long theID);

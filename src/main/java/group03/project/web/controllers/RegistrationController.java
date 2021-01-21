@@ -57,16 +57,25 @@ public class RegistrationController {
                     SiteUser newUser;
                     newUser = createAccount(accountForm, result);
 
-                    accountService.createAUser(newUser);
+                     if (!accountService.checkIfNewUserExists(newUser.getUserName())) {
+
+                         accountService.createAUser(newUser);
                     /*
                         On successful user creation, redirect back to main page.
                      */
-                    String creationSuccessful = "accountCreated";
+                         String creationSuccessful = "accountCreated";
 
-                    model.addAttribute("message", creationSuccessful);
-                    model.addAttribute("account", newUser.getUserName());
+                         model.addAttribute("message", creationSuccessful);
+                         model.addAttribute("account", newUser.getUserName());
 
-                    return "/login";
+                         return "/login";
+
+                     } else {
+                         String alreadyExists = "User already exists! please choose another name";
+
+                         model.addAttribute("message", alreadyExists);
+                         return "/registration";
+                     }
 
                 } else {
                     return "redirect:register";

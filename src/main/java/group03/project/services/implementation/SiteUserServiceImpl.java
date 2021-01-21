@@ -57,4 +57,7 @@ public class SiteUserServiceImpl implements SiteUserService {
     @Override
     public void deleteSelectedUser(Long userID) { userRepoJPA.deleteById(userID); }
 
+    @Override
+    public boolean checkIfNewUserExists(String username) {return userRepoJPA.existsByUserName(username); }
+
 }

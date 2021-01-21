@@ -35,8 +35,7 @@ public class SiteUser {
     private Boolean isActive;
 
     @Column(name = "permissions")
-    private String permissions;
-
+    private String permissions = "ROLE_USER";
 
     public SiteUser(String anEmailAddress, String aPassword, String aUsername) {
         this(null,  anEmailAddress , aPassword, aUsername, true, null);

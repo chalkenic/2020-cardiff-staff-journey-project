@@ -14,6 +14,8 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -233,7 +235,7 @@ public class HomeController {
      * @return redirection to localhost:8080 page
      */
     @GetMapping("/logout")
-    public String HandleLogout(HttpServletRequest request, HttpServletResponse response, Model model) {
+    public String HandleLogout(HttpServletRequest request, HttpServletResponse response, RedirectAttributes model) {
         /*
           Collects current authentication found in session.
          */
@@ -249,10 +251,7 @@ public class HomeController {
         /*
           Provide message to front-end indicating logout successful
          */
-        String loggedOut = "loggedOut";
-
-        model.addAttribute("message", loggedOut);
-        return "login";
+        return "redirect:/";
     }
 
     /**
@@ -266,7 +265,7 @@ public class HomeController {
 
             model.addAttribute("message", loginFailure);
 
-            return "/login";
+            return "login";
 
 
 //            return "redirect:" + request.getHeader("referer");
@@ -284,5 +283,10 @@ public class HomeController {
         Long currentUserID = currentUser.getUserID();
 
         return currentUserID;
+    }
+
+    @GetMapping("/403-error")
+    public String handleUnauthorizedAccess(Model model) {
+        return "403-error";
     }
 }
