@@ -11,6 +11,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.DelegatingAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+
+import java.util.LinkedHashMap;
 
 @Configuration
 @EnableWebSecurity
@@ -18,13 +26,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /*
     Wires service for accessing UserDetailsService method LoadUserByUsername
      */
-    @Autowired
+    final
     LoginDetailsService userDetailsService;
+
+    @Autowired
+    public SecurityConfig(LoginDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     /**
      * Provides Adds authentication based
-     * @param auth - authentication builder object that accepts provided
-     * @throws Exception
+     * @param auth - authentication builder object that accepts provided authentication from provided method.
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -41,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 /*
-                    Only admin has access to specific pages.
+                    Only admin role has access to administration pages.
                  */
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 /*

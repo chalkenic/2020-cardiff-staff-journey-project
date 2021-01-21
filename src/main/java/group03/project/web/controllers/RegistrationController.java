@@ -40,7 +40,7 @@ public class RegistrationController {
 
     @PostMapping("/register-user")
     public String createNewUser(@ModelAttribute("newUser") @Valid UserCreationForm accountForm,
-                                BindingResult result) {
+                                Model model, BindingResult result) {
 
 
         if(!result.hasErrors()) {
@@ -56,23 +56,40 @@ public class RegistrationController {
                      */
                     SiteUser newUser;
                     newUser = createAccount(accountForm, result);
-                    accountService.createAUser(newUser);
 
+                    accountService.createAUser(newUser);
                     /*
                         On successful user creation, redirect back to main page.
                      */
-                    return "redirect:/";
+                    String creationSuccessful = "accountCreated";
+
+                    model.addAttribute("message", creationSuccessful);
+                    model.addAttribute("account", newUser.getUserName());
+
+                    return "/login";
 
                 } else {
                     return "redirect:register";
                 }
                 /**
-                 * Catches any errors made when appending to database via JPA.
+                 * Catches incorrect entries added to JPA.
                  */
             } catch (Exception e) {
-                System.out.println("That username is taken; please try again");
 
-                return "redirect:register";
+                String[] passwordIncorrectState = {
+                        "Password must contain 3 out of 4 instances of the following: ",
+                        "- minimum 1 uppercase character",
+                        "- minimum 1 lowercase character",
+                        "- minimum 1 number",
+                        "- minimum 1 special character",
+                        " ",
+                        "No more than 2 equal characters can be in a row!"
+
+                };
+
+                model.addAttribute("message", passwordIncorrectState);
+
+                return "/registration";
             }
         } else {
             System.out.println("Result has errors");
@@ -86,15 +103,32 @@ public class RegistrationController {
                                    BindingResult result) {
         SiteUser newUser;
 
-        try {
-         newUser = new SiteUser(
-                 accountForm.getEmailAddress(),
-                 encoder.encode(accountForm.getPassword()),
-                 accountForm.getUserName());
-        } catch (Exception ex) {
+        String regexPtrn = "(?:(?=.*\\d)" +
+                "(?=.*[A-Z])" +
+                "(?=.*[a-z])|(?=.*\\d)" +
+                "(?=.*[^A-Za-z0-9])" +
+                "(?=.*[a-z])|(?=.*[^A-Za-z0-9])" +
+                "(?=.*[A-Z])" +
+                "(?=.*[a-z])|(?=.*\\d)" +
+                "(?=.*[A-Z])" +
+                "(?=.*[^A-Za-z0-9]))" +
+                "(?!.*(.)\\1{2,})[A-Za-z0-9!~<>,;:_=?*+#.\"&§%°()\\|\\[\\]\\-\\$\\^\\@\\/]{8,32}";
+
+        if (accountForm.getPassword().matches(regexPtrn)) {
+
+            try {
+                newUser = new SiteUser(
+                        accountForm.getEmailAddress(),
+
+                        encoder.encode(accountForm.getPassword()),
+                        accountForm.getUserName());
+            } catch (Exception ex) {
+                return null;
+            }
+            return newUser;
+        } else {
             return null;
         }
-        return newUser;
     }
 
 }

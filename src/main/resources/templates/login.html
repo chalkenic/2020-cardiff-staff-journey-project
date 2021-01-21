@@ -16,51 +16,55 @@
 </head>
 <body>
 <div th:replace="navbar-login.html :: header" style=""></div>
-    <main>
-        <div class="sidenav">
-            <div class="login-main-text">
-                <h2>Progress<br>Tracker</h2>
-                <p>Welcome! Login to continue or sign up for an account.</p>
-            </div>
+<main>
+    <div class="sidenav">
+        <div class="login-main-text">
+            <h2>Progress<br>Tracker</h2>
+            <p>Welcome! Login to continue or sign up for an account.</p>
         </div>
 
-        <div class="main">
-            <div class="col-md-6 col-sm-12">
-                <div class="login-form">
-                    <form name="login" th:action="@{/login}" method="post">
-                        <div class="form-group">
-                            <div th:if="${param.error}">
-                                There was an error.
-                            </div>
-                            <div th:if="${param.logout}">
-                                You have been logged out.
-                            </div>
-                            <label>User Name</label>
-                            <input type="text" name = "username" class="form-control" placeholder="User Name">
-                        </div>
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" name = "password" class="form-control" placeholder="Password">
-                        </div>
-                        <button type="submit" class="login-button" id="login-button">Login</button>
-                    </form>
-                </div>
-                <div class="forgot-create-buttons-wrapper">
-                    <p>
-                        <a href = "/register" class = "button">Create account</a>
-                        <a href = "/" class = "button">Forgot password?</a>
-                    </p>
-                    <br>
-                </div>
+    </div>
+
+    <div class="main">
+        <div class="col-md-6 col-sm-12">
+            <div class="login-form">
+
+                <form name="login" th:action="@{/login}" method="post">
+                    <div class="form-group">
+                        <label>User Name</label>
+                        <input type="text" name = "username" class="form-control" placeholder="User Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name = "password" class="form-control" placeholder="Password">
+                    </div>
+                    <button type="submit" class="login-button" id="login-button">Login</button>
+                </form>
+            </div>
+
+            <div class="forgot-create-buttons-wrapper">
+<!--                <p>-->
+                <div class = "button-wrapper"> <a href = "/register" class = "button">Create account</a></div>
                 <br>
+                <div class = button-wrapper>  <a href = "/" class = "button">Forgot password?</a></div>
+<!--                </p>-->
 
+            </div>
+            <br>
+            <div class = "messageBox" th:switch = "${message}">
+                <p th:case = "null"></p>
+                <p class = "messageContents" th:case = "'failedLogin'">Login failed</p>
+                <p class = "messageContents" th:case = "'loggedOut'">You have logged out successfully</p>
+                <p class = "messageContents" th:case = "'accountCreated'" th:text = "'account:  '+ ${account} + ' -- created!'">created</p>
             </div>
 
         </div>
 
+    </div>
 
 
-    </main>
+
+</main>
 <script>
     var pathname = window.location.pathname,
         pages = ['home', 'login'];

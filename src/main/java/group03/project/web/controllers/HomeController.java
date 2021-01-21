@@ -252,7 +252,7 @@ public class HomeController {
         String loggedOut = "loggedOut";
 
         model.addAttribute("message", loggedOut);
-        return "/login";
+        return "login";
     }
 
     /**

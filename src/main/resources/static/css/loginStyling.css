@@ -67,6 +67,7 @@ body {
     .register-form{
         margin-top: 20%;
     }
+
 }
 
 
@@ -74,7 +75,7 @@ body {
     margin-top: 20%;
     padding: 60px;
     color: #fff;
-    font-family:"Lato";
+    font-family:"Karla";
 }
 
 .login-main-text h2{
@@ -86,11 +87,6 @@ body {
     color: #fff;
 }
 
-
-#forgot-pw-button, #create-acc-button{
-    border:none;
-    background-color:white;
-}
 
 .forgot-create-buttons-wrapper{
     margin-top:20px;
@@ -104,7 +100,30 @@ body {
     text-decoration: none;
     color: black;
     margin-left: 20px;
+}
 
+.button-wrapper {
+    margin-top: 15px;
+}
+
+.messageBox {
+
+
+    margin-left: 20px;
+}
+
+.failedRegistrationBox {
+
+    margin-left: 20px;
+    margin-top: 15px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.messageContents {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 10px;
 }
 
 .login-button {
