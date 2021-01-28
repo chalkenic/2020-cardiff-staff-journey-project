@@ -3,6 +3,7 @@ package group03.project.web;
 import group03.project.TestSupport;
 
 import group03.project.domain.SiteUser;
+import group03.project.services.offered.SiteUserService;
 import group03.project.services.required.SiteUserRepository;
 import group03.project.services.required.TagRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +31,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-//@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase
@@ -40,19 +40,19 @@ public class UserAccountTest {
     private MockMvc mvc;
 
     @Autowired
-    private SiteUserRepository repository;
+    private SiteUserService repository;
 
     @Test
-    @DisplayName("302 redirect occurs when entering account without authentication")
-    @WithMockUser(username="user", password = "password1", roles = "USER")
-    public void shouldAcceptUserWhenAttemptingAccessToProfile() throws Exception {
-        mvc.perform(get("/user/account")).andExpect(status().is(200));
+    @DisplayName("302 redirect occurs when entering account without any authorization")
+    public void shouldDeclineUserWhenAttemptingAccessToProfile() throws Exception {
+        mvc.perform(get("/user/account")).andExpect(status().is(302));
     }
 
     @Test
-    @DisplayName("302 redirect occurs when entering account without authentication")
-    public void shouldDeclineUserWhenAttemptingAccessToProfile() throws Exception {
-        mvc.perform(get("/user/account")).andExpect(status().is(302));
+    @DisplayName("403 forbidden HTTP code occurs when entering account without necessary authorization")
+    @WithMockUser(username = "user", password = "password1", roles = "USER")
+    public void shouldDeclineUserAttemptOfAccessingAdminDashboard() throws Exception {
+        mvc.perform(get("/admin/dashboard")).andExpect(status().is(403));
     }
 
     @Test
@@ -78,7 +78,6 @@ public class UserAccountTest {
         mvc.perform(get("/dashboard"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(TestSupport.doesNotContainString("Tag (admin)")));
-
     }
 
 
@@ -99,20 +98,25 @@ public class UserAccountTest {
     @WithMockUser(username = "admin", password = "password1", roles = "ADMIN")
     public void shouldNotFindUserWhenDeleteMethodPerformed() throws Exception {
 
-        SiteUser andrew = new SiteUser("andrew@gmail.co.uk", "andypandy", "Andy");
-
-        repository.save(andrew);
-
-        mvc.perform(get("/admin/all-accounts"))
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("Andy")));
-
-        repository.deleteById(andrew.getUserID());
-
+        // Assert on page to confirm specific user andypandy does not exist.
         mvc.perform(get("/admin/all-accounts"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(TestSupport.doesNotContainString("andypandy")));
 
+        // Create andypandy and save to database.
+        SiteUser andrew = new SiteUser("andrew@gmail.co.uk", "andypandy", "Andy");
+        repository.createAUser(andrew);
+
+        // Assert that andy now within list. Delete upon confirmation.
+        mvc.perform(get("/admin/all-accounts"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Andy")));
+        repository.deleteSelectedUser(andrew.getUserID());
+
+        // Assert that andypandy now removed from page.
+        mvc.perform(get("/admin/all-accounts"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(TestSupport.doesNotContainString("andypandy")));
 
     }
 

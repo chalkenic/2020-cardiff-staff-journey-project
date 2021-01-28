@@ -67,7 +67,7 @@ public class ActivityTest {
         Activity customActivity = new Activity("activityTest", "an activity test");
 
         activityService.save(customActivity);
-        tagService.save(new Tag(null, "Motivational"));
+        tagService.save(new Tag("Motivational", "this was motivational", false));
 
         Activity savedActivity = activityService.findByName("activityTest").get();
 
