@@ -31,8 +31,4 @@ public class Tag {
     public Tag(String tagName, String theDescription, Boolean isOfficial) {
         this(null, tagName, theDescription, isOfficial);
     }
-
-    public Tag(Long id, String tagName) {
-        this(id, tagName, null, null);
-    }
 }
