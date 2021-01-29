@@ -1,10 +1,9 @@
 package group03.project.config;
 
-import group03.project.config.SiteUserPrincipal;
+
 import group03.project.domain.SiteUser;
 import group03.project.services.required.SiteUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

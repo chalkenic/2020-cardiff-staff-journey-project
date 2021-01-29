@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>All activities</title>
+    <style>
+        font-family: "Karla", sans-serif;
+    </style>
+    <link th:rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link th:rel="stylesheet" th:href="@{/css/dashPageStyle.css}">
+
+    <link th:rel="stylesheet" th:href="@{/css/dashPageStyle.css}">
+    <link th:rel="stylesheet" th:href="@{/css/gradientBg.css}">
+
+    <link th:rel="stylesheet" th:href="@{/css/contentMargin.css}">
+
+    <script src="https://kit.fontawesome.com/d312da903a.js" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500&display=swap" rel="stylesheet">
+
+
+    <script th:src="@{/js/bootstrap.js}"></script>
+    <link th:rel="stylesheet" th:href="@{/css/bootstrap.css}">
+
+</head>
+    <body>
+    <div th:replace="navbar.html :: header"></div>
+    <div class="content-pane">
+        <div class = "row">
+            <div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
+                <div class="well profile" id="container-box-off">
+                    <p>You do not have access to view this page!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    </body>
+</html>

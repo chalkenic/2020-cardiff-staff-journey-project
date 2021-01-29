@@ -3,24 +3,17 @@ package group03.project.repositories;
 import group03.project.domain.Activity;
 import group03.project.domain.Objective;
 import group03.project.domain.Tag;
-import group03.project.services.offered.ActivityService;
-import group03.project.services.offered.ObjectiveService;
-import group03.project.services.offered.TagService;
 import group03.project.services.required.ActivityRepository;
 import group03.project.services.required.ObjectiveRepository;
 import group03.project.services.required.TagRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.security.test.context.support.WithMockUser;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
-@AutoConfigureTestDatabase
 public class ActivityTest {
 
     @Autowired
@@ -29,7 +22,6 @@ public class ActivityTest {
     public TagRepository tagService;
     @Autowired
     public ObjectiveRepository objectiveRepository;
-
 
 
     @Test
@@ -68,7 +60,7 @@ public class ActivityTest {
         Activity customActivity = new Activity("activityTest", "an activity test");
 
         activityService.save(customActivity);
-        tagService.save(new Tag(null, "Motivational"));
+        tagService.save(new Tag("Motivational", "this was motivational", false));
 
         Activity savedActivity = activityService.findByName("activityTest").get();
 

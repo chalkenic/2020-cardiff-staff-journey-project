@@ -27,9 +27,8 @@ public class ObjectiveServiceImpl implements ObjectiveService {
 //    private String newObjectiveSQL;
 
     @Autowired
-    public ObjectiveServiceImpl(JdbcTemplate theTemplate, ObjectiveRepository objRepo, TagRepository tagRepo,
+    public ObjectiveServiceImpl( ObjectiveRepository objRepo, TagRepository tagRepo,
     ActivityRepository actRepo) {
-//        template = theTemplate;
         objectiveRepository = objRepo;
         tagRepository = tagRepo;
         activityRepository = actRepo;
@@ -77,15 +76,21 @@ public class ObjectiveServiceImpl implements ObjectiveService {
     @Override
     public Activity getAssociatedActivity(Objective objective) {
 
+        // Create empty activity.
         Activity foundActivity = new Activity();
+
+        //Source all activities within database.
         List<Activity> activities = activityRepository.findAll();
         for (Activity newActivity : activities) {
 
         }
         for(int x = 0; x < activities.size(); x++) {
+
             Activity currentActivity = (activities.get(x));
+            // Check activityID stored within objective object & measure against database. break if positive.
             if(currentActivity.getActivityID() == objective.getActivity().getActivityID()) {
                 foundActivity = currentActivity;
+                break;
             }
         }
         return foundActivity;

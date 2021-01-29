@@ -20,6 +20,9 @@ public interface ActivityRepository {
 
     Optional<Activity> findByName(String name);
 
+    @Query(value = "select max(activityID) from activity", nativeQuery = true)
+    public Long findLastActivityID();
+
 
 
 }

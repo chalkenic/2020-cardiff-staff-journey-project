@@ -15,9 +15,25 @@ public class SiteUserServiceImpl implements SiteUserService {
     final SiteUserRepository userRepoJPA;
 
     @Autowired
-    public SiteUserServiceImpl(SiteUserRepository aUserRepoJPA) {
-        userRepoJPA = aUserRepoJPA;
-    };
+    public SiteUserServiceImpl(SiteUserRepository aUserRepoJPA) { userRepoJPA = aUserRepoJPA; };
+
+    /**
+     * Updates user in database with provided SiteUser object.
+     * @param user - SiteUser object with data differing to current database object.
+     */
+    @Override
+    public void updateUser(SiteUser user) {
+
+        Optional<SiteUser> userToAmend = userRepoJPA.findById(user.getUserID());
+
+        // Stream updates all of object's fields due to covering all types of account amending.
+        userToAmend.ifPresent(currentUser -> {
+            currentUser.setEmailAddress(user.getEmailAddress());
+            currentUser.setPassword(user.getPassword());
+            currentUser.setUserName(user.getUserName());
+        });
+        userRepoJPA.save(userToAmend.get());
+    }
 
     @Override
     public List<SiteUser> findAllUsers() { return userRepoJPA.findAll(); }
@@ -34,27 +50,15 @@ public class SiteUserServiceImpl implements SiteUserService {
     public Optional<SiteUser> findUserByUserName(String userName) { return userRepoJPA.findByUserName(userName); }
 
 
-    @Override
-    public void updateUser(SiteUser user) {
 
-        Optional<SiteUser> userToAmend = userRepoJPA.findById(user.getUserID());
-
-//        SiteUser userAmend = new SiteUser(user.)
-
-        userToAmend.ifPresent(currentUser -> {
-                    currentUser.setEmailAddress(user.getEmailAddress());
-                    currentUser.setPassword(user.getPassword());
-                    currentUser.setUserName(user.getUserName());
-                });
-
-
-        userRepoJPA.save(userToAmend.get());
-    }
 
     @Override
     public void createAUser(SiteUser aSiteuser) { userRepoJPA.save(aSiteuser); }
 
     @Override
     public void deleteSelectedUser(Long userID) { userRepoJPA.deleteById(userID); }
+
+    @Override
+    public boolean checkIfNewUserExists(String username) {return userRepoJPA.existsByUserName(username); }
 
 }
