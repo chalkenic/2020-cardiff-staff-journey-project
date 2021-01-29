@@ -55,8 +55,11 @@ public class InfoController {
                                     BindingResult result) {
 
         if(!result.hasErrors()) {
+            // Source user object using id provided from thymeleaf form.
             SiteUser selectedUser = userUpdateService.findUserById(Long.parseLong(nameForm.getId())).get();
+            // Changes selected object field to provided edit.
             selectedUser.setUserName(nameForm.getEdit());
+            // Parse user into Service layer for database update.
             userUpdateService.updateUser(selectedUser);
         }
         return "redirect:/logout";

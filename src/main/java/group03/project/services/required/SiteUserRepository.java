@@ -24,7 +24,4 @@ public interface SiteUserRepository {
      SiteUser save(SiteUser aSiteUser);
 
      void deleteById(Long theID);
-
-
-
 }

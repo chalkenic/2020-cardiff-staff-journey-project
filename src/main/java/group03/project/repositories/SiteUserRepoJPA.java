@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 
 public interface SiteUserRepoJPA extends JpaRepository<SiteUser, Long>, SiteUserRepository {
 
-
 }
