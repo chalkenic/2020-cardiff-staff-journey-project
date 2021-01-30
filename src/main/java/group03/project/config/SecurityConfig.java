@@ -11,6 +11,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.DelegatingAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+
+import java.util.LinkedHashMap;
 
 @Configuration
 @EnableWebSecurity
@@ -18,13 +26,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /*
     Wires service for accessing UserDetailsService method LoadUserByUsername
      */
-    @Autowired
+    final
     LoginDetailsService userDetailsService;
+
+    @Autowired
+    public SecurityConfig(LoginDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     /**
      * Provides Adds authentication based
-     * @param auth - authentication builder object that accepts provided
-     * @throws Exception
+     * @param auth - authentication builder object that accepts provided authentication from provided method.
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -40,31 +52,53 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
+                /*
+                    Only admin role has access to administration pages.
+                 */
                 .antMatchers("/admin/**").hasRole("ADMIN")
+                /*
+                    Both users and admin can access user pages.
+                 */
                 .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+                /*
+                    All users on application have access to initial page alongside visual libraries.
+                 */
                 .antMatchers("/login").permitAll()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/fonts/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/register").permitAll()
                 .and()
+                .exceptionHandling().accessDeniedPage("/403-error")
+                .and()
+                /*
+                    Default spring login page to /login. Allow all users access.
+                 */
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
+                /*
+                    Signal successful logins to respective dashboard. Deny failed logins back to login page.
+                 */
                 .defaultSuccessUrl("/dashboard")
                 .failureForwardUrl("/failed-login")
                 .and()
+                /*
+                    Logout will invalidate session & delete current cookie.
+                 */
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/logout")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID");
+;
 
     }
 
     /**
-     * hashes password with a strength of 10 (rounds). Salt applied to end.
-     * @return
+     * hashes password with a strength of 10 (rounds). Salt applied at beginning of hash
+     * to provide further protection.
+     * @return a new Bcrypt encoder object.
      */
     @Bean
     public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }

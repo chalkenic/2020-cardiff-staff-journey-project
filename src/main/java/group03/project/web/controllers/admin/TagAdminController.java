@@ -106,15 +106,7 @@ public class TagAdminController{
 
         if(!result.hasErrors()) {
 
-            Tag tagToDelete = new Tag(
-                    Long.parseLong(editForm.getId()),
-                    editForm.getEdit());
-
-            System.out.println(tagToDelete.getTagID().getClass());
-            System.out.println(tagToDelete.getTagID());
-
-
-            tagService.deleteSelectedTag(tagToDelete.getTagID());
+            tagService.deleteSelectedTag(Long.parseLong(editForm.getId()));
 
         }
         redirectAttributes.addFlashAttribute("success",true);

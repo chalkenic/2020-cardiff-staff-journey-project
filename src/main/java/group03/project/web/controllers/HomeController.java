@@ -14,6 +14,8 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,7 +46,12 @@ public class HomeController {
      * @return login form for localhost;
      */
     @GetMapping("/")
-    public String navigateToRootPage() {
+    public String navigateToRootPage(Model model) {
+
+        String message = "";
+
+        model.addAttribute("message", message);
+
         return "login";
     }
 
@@ -228,7 +235,7 @@ public class HomeController {
      * @return redirection to localhost:8080 page
      */
     @GetMapping("/logout")
-    public String HandleLogout(HttpServletRequest request, HttpServletResponse response) {
+    public String HandleLogout(HttpServletRequest request, HttpServletResponse response, RedirectAttributes model) {
         /*
           Collects current authentication found in session.
          */
@@ -241,7 +248,10 @@ public class HomeController {
         /*
           Redirect user back to initial localhost:8080.
          */
-        return "redirect:";
+        /*
+          Provide message to front-end indicating logout successful
+         */
+        return "redirect:/";
     }
 
     /**
@@ -249,10 +259,16 @@ public class HomeController {
      * @return redirection back to application root.
      */
     @PostMapping("/failed-login")
-    public String handleFailedLogin(HttpServletRequest request) {
+    public String handleFailedLogin(HttpServletRequest request, Model model) {
 
-//        if(request.getHeader("referer") != null) {
-            return "redirect:" + request.getHeader("referer");
+            String loginFailure = "failedLogin";
+
+            model.addAttribute("message", loginFailure);
+
+            return "login";
+
+
+//            return "redirect:" + request.getHeader("referer");
 //        }
 //        /**
 //         * returns user back to initial localhost:8080
@@ -267,5 +283,10 @@ public class HomeController {
         Long currentUserID = currentUser.getUserID();
 
         return currentUserID;
+    }
+
+    @GetMapping("/403-error")
+    public String handleUnauthorizedAccess(Model model) {
+        return "403-error";
     }
 }

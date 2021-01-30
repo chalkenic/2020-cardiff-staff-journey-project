@@ -3,8 +3,6 @@ package group03.project.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -34,12 +32,6 @@ public class Objective {
         this(null, theActivity, theTag);
     }
 
-//
-//    public Tag(String tagName, String theDescription, Boolean isOfficial) {
-//        this(null, tagName, theDescription, isOfficial);
     }
 
-//    public Tag(Long id, String tagName) {
-//        this(id, tagName, null, null);
-//    }
 

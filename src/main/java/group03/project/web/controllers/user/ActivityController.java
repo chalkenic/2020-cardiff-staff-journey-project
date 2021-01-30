@@ -182,7 +182,6 @@ public class ActivityController {
             return null;
         }
         return newActivity;
-//        return activityService.findMostRecentActivity();
     }
 
 }

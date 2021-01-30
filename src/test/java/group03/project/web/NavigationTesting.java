@@ -82,7 +82,7 @@ public class NavigationTesting {
                 .perform(get("/admin/all-accounts"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("All Users on Record (admin)")));
+                .andExpect(content().string(containsString("All Users on Record")));
 
     }
 }

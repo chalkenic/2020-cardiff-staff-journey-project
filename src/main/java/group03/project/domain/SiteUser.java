@@ -1,9 +1,6 @@
 package group03.project.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -22,7 +19,7 @@ public class SiteUser {
 
     @Column(name="emailAddress")
 
-    @Email(message = "Email should be valid")
+    @Email(message = "Email must be valid")
     private String emailAddress;
 
     @Column(name="password")
@@ -35,15 +32,10 @@ public class SiteUser {
     private Boolean isActive;
 
     @Column(name = "permissions")
-    private String permissions;
-
+    private String permissions = "ROLE_USER";
 
     public SiteUser(String anEmailAddress, String aPassword, String aUsername) {
-        this(null,  anEmailAddress , aPassword, aUsername, null, null);
+        this(null,  anEmailAddress , aPassword, aUsername, true, null);
         this.permissions = "ROLE_USER";
     }
-
-
-
-
 }

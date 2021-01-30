@@ -10,10 +10,10 @@
 git clone https://git.cardiff.ac.uk/c1936922/group-03-staff-project.git
 ```
 
-##### 2. Open MySQL & run following scripts from repository:
+##### 2. Open MySQL & run following scripts in order from repository:
 
-- schema-sql.sql
-- data-sql.sql
+1. schema-sql.sql
+2. data-sql.sql
 
 These can be found inside folder from filepath: group-03-staff-project\src\main\resources.
 
