@@ -77,7 +77,7 @@ public class UserAccountTest {
 
         mvc.perform(get("/dashboard"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(TestSupport.doesNotContainString("Tag (admin)")));
+                .andExpect(content().string(TestSupport.doesNotContainString("Tags (Admin)")));
 
     }
 
@@ -89,8 +89,7 @@ public class UserAccountTest {
 
         mvc.perform(get("/dashboard"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("Tag (admin)")));
-
+                .andExpect(content().string(containsString("Tags (Admin)")));
     }
 
     @Test

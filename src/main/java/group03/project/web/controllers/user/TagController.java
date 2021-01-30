@@ -60,27 +60,26 @@ public class TagController {
                                BindingResult result) {
 
         if(!result.hasErrors()) {
-
-
+            // Tag object created via parsed form data into local method createTag.
             Tag newTag = createTag(tagForm);
 
             try {
+                // Call service layer method for saving new tag.
                 tagService.createCustomTag(newTag);
 
                 redirectAttributes.addFlashAttribute("success",true);
                 redirectAttributes.addFlashAttribute("type","thoughtcloud");
-                return "redirect:/dashboard";
+                // Redirect to all tags page.
+                return "redirect:/user/all-tags";
 
             } catch (NullPointerException e) {
                 e.printStackTrace();
-                System.out.println("failed to create tag");
                 return "redirect:dashboard";
             }
         } else {
             return "all-tags";
         }
     }
-
     private Tag createTag(TagCreationForm tagForm) {
 
         Tag newTag;

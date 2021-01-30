@@ -24,17 +24,13 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    public void createCustomTag(Tag theTag) { tagJPAConnector.save(theTag); }
+
+    @Override
     public void createOfficialTag(Tag theTag) {
 
         theTag.setIsOfficial(true);
         tagJPAConnector.save(theTag);
-    }
-
-    @Override
-    public void createCustomTag(Tag theTag) {
-
-        tagJPAConnector.save(theTag);
-
     }
 
     @Override

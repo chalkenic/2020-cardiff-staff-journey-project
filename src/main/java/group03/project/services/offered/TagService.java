@@ -7,22 +7,25 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Interface allowing communication by controllers to service methods connecting to database
+ * Interface forwarding communication from controllers to Service layer, connecting to database
  * for site users.
  */
 public interface TagService {
 
     public List<Tag> findAllTags();
-    /**
-     * Method that creates official tag inside database
-     * @param theTag - created tag object from controller.
-     */
-    public void createOfficialTag(Tag theTag);
+
     /**
      * Method that creates an unofficial tag inside database
      * @param theTag - created tag object from controller.
      */
     public void createCustomTag(Tag theTag);
+
+    /**
+     * Method that creates official tag inside database
+     * @param theTag - created tag object from controller.
+     */
+    public void createOfficialTag(Tag theTag);
+
 
     /**
      * Method finds tag by id given

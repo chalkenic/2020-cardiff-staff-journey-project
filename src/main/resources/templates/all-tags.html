@@ -41,10 +41,10 @@
                 <h2 class = "display-1" id = "tagHeader" >All Tags</h2>
                 <p class = "lead">A view of all tags currently available for use!</p>
                 <hr class = "my-4">
+                <!-- Hyperlink different depending on authorized roll -->
                 <a sec:authorize="hasRole('ROLE_USER')" class = "btn btn-primary btn-lg" href = "/user/create-tag" role = "button">Create tag</a>
                 <a sec:authorize="hasRole('ROLE_ADMIN')" class = "btn btn-primary btn-lg" href = "/admin/create-tag" role = "button">Create tag</a>
             </div>
-
 
             <div class="well profile" id="container-box-off">
                 <h2>Official Tags</h2>
@@ -55,6 +55,7 @@
                         <th scope = "col">Description</th>
                     </tr>
                     </thead>
+                    <!--Display all official tags within database-->
                     <tr th:each = "tag : ${tags}" >
                         <td th:if = "${tag.isOfficial}" th:text = "${tag.tagName}"></td>
                         <td th:if = "${tag.isOfficial}" th:text = "${tag.description}"></td>
