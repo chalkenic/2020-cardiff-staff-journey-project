@@ -70,9 +70,18 @@ navigate to address localhost:8080. Accounts are provided below for view of dumm
 |  |  |  | official tag creation |
 
 ### 6. Mozilla Firefox Web browser test
+
+1. Navigate to class ActivitySignupTest within folderpath: group-03-staff-project\src\test\java
+\group03\project\page\ActivitySignupTest.
+2. remove "//" from line 31 to enable @Test
+
+#### SERVER MUST BE RUNNING AT TIME OF TEST
+
+3. Launch test via class or via command line below:
+
 ```bash
-# Web browser test excluded from initial build. use below on command line to run.
-# SERVER MUST BE RUNNING AT TIME OF TEST.
+
+#Command line
 .\gradlew -Dtest.single=shouldAddTagAsUserAndDeleteTagAsAdmin test
 
 #Alternate option via git bash
