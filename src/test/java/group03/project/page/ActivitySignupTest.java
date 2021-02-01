@@ -25,23 +25,10 @@ public class ActivitySignupTest {
 
     private WebDriver webDriver;
 
-//    @Value("${local.server.port}")
-//    private int localPort;
-
     @Autowired
     ActivityRepository activeRepo;
 
-//    @BeforeClass
-//    public static void init() {
-//
-//    }
-//
-//    @AfterClass
-//    public static void clear() {
-//
-//    }
-
-    @Test
+    // @Test
     public void shouldAddTagAsUserAndDeleteTagAsAdmin() {
 
         String path = System.getProperty("user.dir");
