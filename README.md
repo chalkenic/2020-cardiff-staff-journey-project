@@ -27,6 +27,7 @@ cd group-03-staff-project
 
 Build server using Gradle using one below option:
 
+
 # 1. via command line: 
 .\gradlew build
 
@@ -38,9 +39,11 @@ Build server using Gradle using one below option:
 # Launch application via jar
 java -jar "build/libs/group-03-staff-project -0.0.1-SNAPSHOT.jar"
 
-#Alternate option via gradle
-.\gradlew bootrun
+#Alternate option via git bash gradle
+./gradlew bootrun
 
+#Alternate option via command line
+.\gradlew bootrun
 ```
 ### 5. Accessing application
 
@@ -66,8 +69,17 @@ navigate to address localhost:8080. Accounts are provided below for view of dumm
 |  |  |  | viewing averages of activity participation rates via user data |
 |  |  |  | official tag creation |
 
+### 6. Web browser test
+```bash
+# Web browser test excluded from initial build. use below on command line to run.
+# SERVER MUST BE RUNNING AT TIME OF TEST.
+.\gradlew -Dtest.single=shouldAddTagAsUserAndDeleteTagAsAdmin test
 
-### 6. Manual Tests
+#Alternate option via git bash
+./gradlew -Dtest.single=shouldAddTagAsUserAndDeleteTagAsAdmin test
+
+```
+### 7. Manual Tests
 
 
 #### A. Add a custom Tag as user, Delete Tag as admin
