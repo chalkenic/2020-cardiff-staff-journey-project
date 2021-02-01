@@ -57,7 +57,7 @@
             </div>
             <div class="well profile" id="container-box-off">
                 <h2>Custom Tags</h2>
-                <table class = "table table-responsive" >
+                <table class = "table table-responsive" id = "custom_table">
                     <thead class = "thead-dark">
                     <tr>
                         <th scope = "col">Tag</th>
@@ -65,13 +65,13 @@
                     </tr>
                     </thead>
                     <tr th:each = "tag : ${tags}">
-                        <td th:unless = "${tag.isOfficial}" th:text = "${tag.tagName}"></td>
+                        <td th:unless = "${tag.isOfficial}" th:text = "${tag.tagName}" th:name = "${tag.tagName}"></td>
                         <td th:unless = "${tag.isOfficial}" th:text = "${tag.description}"></td>
                         <td th:unless = "${tag.isOfficial}" sec:authorize="hasRole('ROLE_ADMIN')">
                             <form class = "delete-form" th:action="@{/admin/delete-tag}" enctype="multipart/form-data" method="post" th:object="${editForm}">
                             <input type = "hidden" th:name="id" th:value = "${tag.tagID}"/>
                             <input type = "hidden" th:name="edit" th:value = "${tag.tagName}"/>
-                            <button type = "submit" class = "btn btn-secondary " name="action" value = "remove ">
+                            <button type = "submit" class = "btn btn-secondary " name="action" value = "remove" id = "delete-row">
                                 Remove Tag
                             </button>
                             </form>

@@ -65,5 +65,4 @@ dependencies {
 test {
 	useJUnitPlatform()
 	exclude '**/*GenerateModel*'
-	ignoreFailures = true
 }
