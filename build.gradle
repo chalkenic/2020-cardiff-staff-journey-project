@@ -65,4 +65,5 @@ dependencies {
 test {
 	useJUnitPlatform()
 	exclude '**/*GenerateModel*'
+	exclude '**/*ActivitySignupTest*'
 }
