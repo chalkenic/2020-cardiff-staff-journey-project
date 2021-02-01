@@ -69,7 +69,7 @@ navigate to address localhost:8080. Accounts are provided below for view of dumm
 |  |  |  | viewing averages of activity participation rates via user data |
 |  |  |  | official tag creation |
 
-### 6. Web browser test
+### 6. Mozilla Firefox Web browser test
 ```bash
 # Web browser test excluded from initial build. use below on command line to run.
 # SERVER MUST BE RUNNING AT TIME OF TEST.
