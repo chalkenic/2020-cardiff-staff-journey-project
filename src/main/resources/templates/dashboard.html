@@ -170,7 +170,7 @@
                 <div>
                     <h3>Your activities</h3>
                     <br>
-                    <div class="list-group">
+                    <div id = "participations" class="list-group">
                         <th:block th:each="participation : ${participations}">
                             <a th:href="@{/user/all-my-participations}" class="list-group-item list-group-item-action flex-column align-items-start active">
                                 <div class="d-flex w-100 justify-content-between">
@@ -214,7 +214,7 @@
 </main>
 </body>
 <footer>
-    <div th:replace="dashDonut.html :: footer"></div>
+    <div id = "tag-donut" th:replace="dashDonut.html :: footer"></div>
     <div th:replace="dashDonut2.html :: footer"></div>
 
     <script th:src="@{/js/dashboardListColorizer.js}"></script>
