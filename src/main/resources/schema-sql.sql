@@ -143,13 +143,13 @@ CREATE TABLE IF NOT EXISTS participation(
 ENGINE = InnoDB;
 
 CREATE USER IF NOT EXISTS 'siteUser'@'localhost' IDENTIFIED BY '99Reflections!' PASSWORD EXPIRE INTERVAL 120 DAY;
-GRANT INSERT, UPDATE, DELETE, SELECT ON developmentToolkit.siteUser TO 'siteUser'@'localhost';
-GRANT INSERT, UPDATE, DELETE, SELECT ON developmentToolkit.activity TO 'siteUser'@'localhost';
-GRANT INSERT, UPDATE, DELETE, SELECT ON developmentToolkit.tag TO 'siteUser'@'localhost';
-GRANT INSERT, UPDATE, SELECT ON developmentToolkit.objective TO 'siteUser'@'localhost';
-GRANT INSERT, UPDATE, SELECT ON developmentToolkit.role TO 'siteUser'@'localhost';
-GRANT INSERT, UPDATE, DELETE, SELECT ON developmentToolkit.reflection TO 'siteUser'@'localhost';
-GRANT INSERT, UPDATE, DELETE, SELECT ON developmentToolkit.participation TO 'siteUser'@'localhost';
+GRANT INSERT, UPDATE, DELETE, SELECT ON developmenttoolkit.siteUser TO 'siteUser'@'localhost';
+GRANT INSERT, UPDATE, DELETE, SELECT ON developmenttoolkit.activity TO 'siteUser'@'localhost';
+GRANT INSERT, UPDATE, DELETE, SELECT ON developmenttoolkit.tag TO 'siteUser'@'localhost';
+GRANT INSERT, UPDATE, SELECT ON developmenttoolkit.objective TO 'siteUser'@'localhost';
+GRANT INSERT, UPDATE, SELECT ON developmenttoolkit.role TO 'siteUser'@'localhost';
+GRANT INSERT, UPDATE, DELETE, SELECT ON developmenttoolkit.reflection TO 'siteUser'@'localhost';
+GRANT INSERT, UPDATE, DELETE, SELECT ON developmenttoolkit.participation TO 'siteUser'@'localhost';
 
 -- -----------------------------------------------------
 -- Triggers
