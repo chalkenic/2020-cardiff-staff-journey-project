@@ -68,7 +68,7 @@ public class RegistrationController {
                          model.addAttribute("message", creationSuccessful);
                          model.addAttribute("account", newUser.getUserName());
 
-                         return "/login";
+                         return "redirect:/";
 
                      } else {
                          String alreadyExists = "User already exists! please choose another name";
