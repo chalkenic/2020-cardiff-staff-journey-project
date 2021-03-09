@@ -77,6 +77,7 @@ public class TagWebTest {
 
     @Test
     @WithMockUser(username="user", password = "password1", roles = "USER")
+    @DisplayName("User credentials have no access to deletion buttons on page.")
     public void shouldNotSeeDeleteButtonAsUser() throws Exception {
 
         repository.save(new Tag(null, "test", "tester tag", false));
@@ -89,6 +90,7 @@ public class TagWebTest {
 
     @Test
     @WithMockUser(username="user", password = "password1", roles = "ADMIN")
+    @DisplayName("Admin credentials are shown deletion buttons on page.")
     public void shouldSeeDeleteButtonAsAdmin() throws Exception {
 
         repository.save(new Tag(null, "test", "tester tag", false));
@@ -102,6 +104,7 @@ public class TagWebTest {
     @Test
     @Transactional
     @WithMockUser(username="user", password = "password1", roles = "ADMIN")
+    @DisplayName("Create a tag, delete a tag, assert tag creation & removal.")
     public void shouldCreateAViewableCustomTagAndDelete() throws Exception {
 
         Tag newTag = new Tag(1L, "a new tag test", "tester tag", false);

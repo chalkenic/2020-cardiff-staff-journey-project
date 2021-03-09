@@ -4,6 +4,7 @@ import group03.project.domain.Activity;
 import group03.project.domain.Participation;
 import group03.project.services.required.ActivityRepository;
 import group03.project.services.required.ParticipationRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -34,6 +35,7 @@ public class ParticipationTest {
 
     @Test
     @WithMockUser(username="admin", password="pass", roles = "ADMIN")
+    @DisplayName("User can assign themselves to an activity.")
     public void addParticipationForOActivity() {
 
         Activity testActivity = new Activity(null, "Test Activity", "Test Url", "Test Desc", true);
@@ -53,6 +55,7 @@ public class ParticipationTest {
 
     @Test
     @WithMockUser(username="admin", password="pass", roles = "ADMIN")
+    @DisplayName("User creates a new participation within database when assigning themselves to an activity.")
     public void generateParticipationID() {
 
         Activity testActivity = new Activity(null, "Test Activity", "Test Url", "Test Desc", true);

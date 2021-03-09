@@ -1,6 +1,7 @@
 package group03.project.web;
 
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -37,6 +38,7 @@ public class NavigationTesting {
 
     @Test
     @WithMockUser
+    @DisplayName("Login page loads on navigation without credentials.")
     public void shouldLoadLoginPage() throws Exception {
         this.mvc
                 .perform(get("/"))
@@ -46,6 +48,7 @@ public class NavigationTesting {
     }
     @Test
     @WithMockUser
+    @DisplayName("About page loads on navigation without credentials.")
     public void shouldLoadAboutPage() throws Exception {
         this.mvc
                 .perform(get("/about"))
@@ -55,8 +58,8 @@ public class NavigationTesting {
     }
 
     @Test
-    @WithMockUser
-    (username = "user", password = "password1", roles = "USER")
+    @WithMockUser(username = "user", password = "password1", roles = "USER")
+    @DisplayName("Dashboard page loads on navigation with user credentials.")
     public void shouldLoadDashboardPage() throws Exception {
         this.mvc
                 .perform(get("/dashboard"))
@@ -67,6 +70,7 @@ public class NavigationTesting {
 
     @Test
     @WithMockUser(username = "user", password = "password1", roles = "USER")
+    @DisplayName("All reflections page loads on navigation with user credentials.")
     public void shouldLoadAllPublicReflections() throws Exception {
         this.mvc
                 .perform(get("/user/all-public-reflections"))
@@ -77,6 +81,7 @@ public class NavigationTesting {
 
     @Test
     @WithMockUser(username = "admin", password = "password1", roles = "ADMIN")
+    @DisplayName("All accounts page loads on navigation with admin credentials.")
     public void shouldLoadAdminPages() throws Exception {
         this.mvc
                 .perform(get("/admin/all-accounts"))

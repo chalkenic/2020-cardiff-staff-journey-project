@@ -42,7 +42,7 @@ public class TagActivityTest {
 
     @Test
     @WithMockUser(value = "user", password = "password", roles = "USER")
-    @DisplayName("User is presented with custom thoughts on page open")
+    @DisplayName("User is presented with custom thoughts on page open.")
     public void shouldHaveCustomThoughtsPresent() throws Exception {
 
         tagService.createCustomTag(new Tag(null, "Motivational", false));
@@ -57,6 +57,7 @@ public class TagActivityTest {
 
     @Test
     @WithMockUser(username="admin", password="pass", roles = "ADMIN")
+    @DisplayName("Activity can be found within database via link stored with objective.")
     public void shouldFindCustomTagInDatabaseRelatingToObjective() throws Exception {
 
         tagService.createCustomTag(new Tag("Motivational", "is Motivational", false));

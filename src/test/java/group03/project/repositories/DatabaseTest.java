@@ -4,6 +4,7 @@ import group03.project.domain.Role;
 import group03.project.domain.SiteUser;
 import group03.project.services.required.RoleRepository;
 import group03.project.services.required.SiteUserRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -25,6 +26,7 @@ public class DatabaseTest {
     private RoleRepository roleRepository;
 
     @Test
+    @DisplayName("User can check user count.")
     public void shouldReturnFourUsers() throws Exception {
 
         List<SiteUser> siteUsers = userRepository.findAll();
@@ -33,6 +35,7 @@ public class DatabaseTest {
     }
 
     @Test
+    @DisplayName("User can check a site user's role in an activity.")
     public void shouldReturnParticipantDescription() throws Exception {
 
         Role role = roleRepository.findById("Participant").get();

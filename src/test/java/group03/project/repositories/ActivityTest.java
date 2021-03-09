@@ -6,6 +6,7 @@ import group03.project.domain.Tag;
 import group03.project.services.required.ActivityRepository;
 import group03.project.services.required.ObjectiveRepository;
 import group03.project.services.required.TagRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -26,6 +27,7 @@ public class ActivityTest {
 
     @Test
     @WithMockUser(username = "user", password = "pass", roles = "admin")
+    @DisplayName("user can source activity in database using objective.")
     public void shouldHaveObjectiveBeLinkedToActivity() throws Exception {
 
         Activity firstActivity = new Activity("activityTest", "an activity test");
@@ -55,6 +57,7 @@ public class ActivityTest {
 
     @Test
     @WithMockUser(username = "user", password = "pass", roles = "USER")
+    @DisplayName("user can add and link a custom thought onto specific activity.")
     public void shouldAddCustomThoughtToActivity() throws Exception {
 
         Activity customActivity = new Activity("activityTest", "an activity test");

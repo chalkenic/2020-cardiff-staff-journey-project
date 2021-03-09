@@ -4,6 +4,7 @@ import group03.project.domain.*;
 import group03.project.services.required.ActivityRepository;
 import group03.project.services.required.ParticipationRepository;
 import group03.project.services.required.ReflectionRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -33,6 +34,7 @@ public class ReflectionTest {
 
     @Test
     @WithMockUser(username="admin", password="pass", roles = "ADMIN")
+    @DisplayName("User can add a reflection to an activity they're participating in.")
     public void addReflectionForAParticipation() {
 
         Activity testActivity = new Activity(null, "Test Activity", "Test Url", "Test Desc", true);
@@ -63,6 +65,7 @@ public class ReflectionTest {
 
     @Test
     @WithMockUser(username="admin", password="pass", roles = "ADMIN")
+    @DisplayName("User can see public reflections made by all users.")
     public void checkReflectionVisibility() {
 
         Activity testActivity1 = new Activity(null, "Test Activity 1", "Test Url", "Test Desc", true);
@@ -110,6 +113,7 @@ public class ReflectionTest {
 
     @Test
     @WithMockUser(username="admin", password="pass", roles = "ADMIN")
+    @DisplayName("User can see an activity's rating.")
     public void returnReflectionRating() {
 
         Long rating = 3L;
@@ -131,6 +135,7 @@ public class ReflectionTest {
 
     @Test
     @WithMockUser(username="user",password="pass",roles="admin")
+    @DisplayName("User can confirm private reflections aren't in the public reflections list")
     public void privacyTest() {
 
         Activity testActivity = new Activity(null, "Test Activity", "Test Url", "Test Desc", true);

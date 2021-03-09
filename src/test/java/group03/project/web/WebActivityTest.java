@@ -4,6 +4,7 @@ package group03.project.web;
 import group03.project.domain.Activity;
 import group03.project.services.offered.ActivityService;
 import group03.project.services.required.ActivityRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -41,6 +42,7 @@ public class WebActivityTest {
 
     @Test
     @WithMockUser(username = "admin", password = "password1", roles = "ADMIN")
+    @DisplayName("User with admin credentials can access official activity creation page.")
     public void shouldLoadAddOfficialActivityPage() throws Exception {
 
         this.mvc
@@ -51,6 +53,7 @@ public class WebActivityTest {
     }
 
     @Test
+    @DisplayName("User with user credentials can access official activity creation page.")
     @WithMockUser(username = "user", password = "password1", roles = "USER")
     public void shouldLoadAddCustomActivityPage() throws Exception {
 
@@ -63,6 +66,7 @@ public class WebActivityTest {
 
     @Test
     @WithMockUser(username = "user", password = "password1", roles = "USER")
+    @DisplayName("Create 2 activities via API method call & page form addition.")
     public void shouldAddActivity() throws Exception {
 
         List<Activity> activities = new ArrayList<>(Arrays.asList(

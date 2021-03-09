@@ -3,6 +3,7 @@ package group03.project.repositories;
 import group03.project.domain.SiteUser;
 import group03.project.services.offered.SiteUserService;
 import group03.project.services.required.SiteUserRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -34,6 +35,7 @@ public class UserUpdateTest {
 
 
     @Test
+    @DisplayName("User details can be updated with defined API calls.")
     public void shouldUpdateAUserNameAndEmailAddress() throws Exception {
 
         SiteUser ryan = new SiteUser(1L, "email@emailaddress.com", "password", "david", null, null);

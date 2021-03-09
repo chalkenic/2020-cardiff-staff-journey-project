@@ -1,5 +1,6 @@
 package group03.project.web;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -24,6 +25,7 @@ public class ReflectionWebTest {
 
     @Test
     @WithMockUser(username="admin", password="pass", roles="ADMIN")
+    @DisplayName("Admin reflections page loads on navigation with admin credentials.")
     public void loadAdminPublicReflections() throws Exception {
 
         this.mvc
@@ -35,6 +37,7 @@ public class ReflectionWebTest {
 
     @Test
     @WithMockUser(username="user", password="password1", roles="USER")
+    @DisplayName("User reflections page loads on navigation with user credentials.")
     public void loadUserMyReflections() throws Exception {
 
         this.mvc

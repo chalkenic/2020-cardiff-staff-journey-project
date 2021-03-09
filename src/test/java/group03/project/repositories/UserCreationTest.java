@@ -2,6 +2,7 @@ package group03.project.repositories;
 
 import group03.project.domain.SiteUser;
 import group03.project.services.required.SiteUserRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -18,6 +19,7 @@ public class UserCreationTest {
     public SiteUserRepository siteUserRepository;
 
     @Test
+    @DisplayName("Additional users can be created, and are visible on search.")
     public void addTwoAdditionalTestUsersAndCountTotal() throws Exception {
 
         SiteUser greg = new SiteUser("greg@hotmail.co.uk", "password", "Greg");
@@ -32,6 +34,7 @@ public class UserCreationTest {
     }
 
     @Test
+    @DisplayName("Created users are searchable via email address.")
     public void findNewCreatedUserInDatabaseByEmailAndId() throws Exception {
 
         SiteUser andrew = new SiteUser("andrew@gmail.co.uk", "andypandy", "Andy");
