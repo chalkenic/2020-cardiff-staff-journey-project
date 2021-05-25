@@ -6,7 +6,6 @@ import group03.project.web.controllers.ControllerSupport;
 import group03.project.web.forms.ActivityJoinForm;
 import group03.project.web.forms.ActivityCreationForm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -57,7 +56,7 @@ public class ActivityController {
     //Submit the activity to the database
     @PostMapping("/add-custom-activity")
     public String submitCustomActivity(RedirectAttributes redirectAttributes, @ModelAttribute("activity")
-            @Valid ActivityCreationForm activity, Authentication authentication, BindingResult result) {
+            @Valid ActivityCreationForm activity, BindingResult result) {
         /*
         Creates activity via basic information parsed from form.
          */
@@ -84,7 +83,7 @@ public class ActivityController {
         /*
         Source user who created activity from authentication.
          */
-        Long currentUserID = getCurrentID(authentication);
+        Long currentUserID = ControllerSupport.getUserName();
         /*
         Create participation from data created prior.
          */
@@ -103,10 +102,10 @@ public class ActivityController {
 
     //List all activities the user can add themselves too
     @GetMapping("/activities-signup-list")
-    public String listActivities(Model model, Authentication authentication) {
+    public String listActivities(Model model) {
         List<Activity> activities = activityService.findAllActivities();
         List<Participation> participations = participationService.findAllParticipations();
-        Long currentID = getCurrentID(authentication);
+        Long currentID = ControllerSupport.getUserName();
         //Get a list of all activities the user is currently participating in
         List<Long> currentActivitiesIDs = new ArrayList<>();
         for (int y = 0; y < participationService.getParticipationListSize(); y++) {
@@ -146,25 +145,21 @@ public class ActivityController {
     }
     //Add a participation for the official activity the user has just signed up to
     @PostMapping("/activities-signup-list")
-    public String joinActivity(@ModelAttribute("activity") @Valid ActivityJoinForm editForm, Authentication authentication) {
+    public String joinActivity(@ModelAttribute("activity") @Valid ActivityJoinForm editForm) {
         if(editForm.getActivityJoinID() == null) {
             throw new ValidationException("Activity ID can't be null");
         }
         java.util.Date date = new java.util.Date();
-        Long currentUserID = getCurrentID(authentication);
+        Long currentUserID = getCurrentID();
         Participation participation = new Participation(null,  Long.parseLong(editForm.getActivityJoinID()),date, "Participant", currentUserID);
         participationService.createParticipation(participation);
         return "redirect:/dashboard";
     }
 
     //Get the current user's ID
-    Long getCurrentID(Authentication authentication) {
-        String currentUserName = ControllerSupport.getAuthenticatedUserName(authentication);
-        Optional<SiteUser> currentUserOptional = siteUserService.findUserByUserName(currentUserName);
-        SiteUser currentUser = currentUserOptional.get();
-        Long currentUserID = currentUser.getUserID();
-//        Integer currentUserIDInt = currentUserID.intValue();
-        return currentUserID;
+    Long getCurrentID() {
+        return ControllerSupport.getUserName();
+
     }
 
     private Activity createActivity(ActivityCreationForm activityForm,

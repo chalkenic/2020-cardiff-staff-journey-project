@@ -12,7 +12,6 @@ import group03.project.services.offered.SiteUserService;
 import group03.project.web.controllers.ControllerSupport;
 import group03.project.web.lists.ReflectList;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,22 +43,22 @@ public class ReflectController {
 
     //Add a reflection
     @GetMapping("/add-reflection")
-    public String addReflection(Model model, Authentication authentication) {
+    public String addReflection(Model model) {
         Reflection reflection = new Reflection();
         model.addAttribute("reflection", reflection);
 
-        List<Activity> possibleActivities = reflectionSetup(authentication);
+        List<Activity> possibleActivities = reflectionSetup();
 
         model.addAttribute("activities", possibleActivities);
         return "add-reflection";
     }
 
     @GetMapping("/add-reflection-direct")
-    public String addReflectionDirect (Model model, Authentication authentication) {
+    public String addReflectionDirect (Model model) {
         Reflection reflection = new Reflection();
         model.addAttribute("reflection", reflection);
 
-        List<Activity> possibleActivities = reflectionSetup(authentication);
+        List<Activity> possibleActivities = reflectionSetup();
 
         model.addAttribute("activities", possibleActivities);
         return "add-reflection-direct";
@@ -67,16 +66,16 @@ public class ReflectController {
 
     //Submit the entry to the database
     @PostMapping("/add-reflection")
-    public String submitReflection(RedirectAttributes redirectAttributes, @ModelAttribute("reflection") Reflection reflection, Authentication authentication) {
+    public String submitReflection(RedirectAttributes redirectAttributes, @ModelAttribute("reflection") Reflection reflection) {
 
         if(reflection.getParticipationID() == null) {
-            throw new ValidationException("No valid assigned activity - cannot retrieve related activity and participation if no activity is present");
+            reflection.setParticipationID(participationService.getAllParticipations().get(1).getParticipationID());
         }
 
         System.out.println(reflection.getParticipationID());
         Long activityID = reflection.getParticipationID();
         Activity chosenActivity = new Activity();
-        Long currentID = getCurrentID(authentication);
+        Long currentID = ControllerSupport.getUserName();
         List<Participation> participations = participationService.findAllParticipations();
         Participation chosenParticipation = new Participation();
         for (int x = 0; x < participationService.getParticipationListSize(); x++) {
@@ -97,15 +96,15 @@ public class ReflectController {
     }
 
     @PostMapping("/add-reflection-direct")
-    public String submitReflectionDirect(RedirectAttributes redirectAttributes, @ModelAttribute("reflection") Reflection reflection, Authentication authentication) {
+    public String submitReflectionDirect(RedirectAttributes redirectAttributes, @ModelAttribute("reflection") Reflection reflection) {
 
         if(reflection.getParticipationID() == null) {
-            throw new ValidationException("No valid assigned activity - cannot retrieve related activity and participation if no activity is present");
+            reflection.setParticipationID(participationService.getAllParticipations().get(1).getParticipationID());
         }
 
         Long activityID = reflection.getParticipationID();
         Activity chosenActivity = new Activity();
-        Long currentID = getCurrentID(authentication);
+        Long currentID = ControllerSupport.getUserName();
         List<Participation> participations = participationService.findAllParticipations();
         Participation chosenParticipation = new Participation();
         for (int x = 0; x < participationService.getParticipationListSize(); x++) {
@@ -127,10 +126,10 @@ public class ReflectController {
 
     //Return the user's reflections in a user-friendly format
     @GetMapping("/all-my-reflections")
-    public String listMyReflections(Model model, Authentication authentication) {
+    public String listMyReflections(Model model) {
         List<Reflection> reflections = reflectionServiceImpl.findAllReflections();
         List<Reflection> myReflections = new ArrayList<>();
-        Long currentID = getCurrentID(authentication);
+        Long currentID = ControllerSupport.getUserName();
 
         //Get a list of all participations the user can or has reflected on
         List<Participation> participations = participationService.findAllParticipations();
@@ -201,20 +200,13 @@ public class ReflectController {
     }
 
     //Get the current user's ID
-    Long getCurrentID(Authentication authentication) {
-        String currentUserName = ControllerSupport.getAuthenticatedUserName(authentication);
-        Optional<SiteUser> currentUserOptional = siteUserService.findUserByUserName(currentUserName);
-        SiteUser currentUser = currentUserOptional.get();
-        Long currentUserID = currentUser.getUserID();
 
-        return currentUserID;
-    }
 
-    List<Activity> reflectionSetup(Authentication authentication) {
+    List<Activity> reflectionSetup() {
 
         List<Activity> activities = activityService.findAllActivities();
         List<Participation> participations = participationService.findAllParticipations();
-        Long currentID = getCurrentID(authentication);
+        Long currentID = (ControllerSupport.getUserName());
         //Get a list of all activities the user is currently participating in
         List<Long> currentActivitiesIDs = new ArrayList<>();
         for (int x = 0; x < participationService.getParticipationListSize(); x++) {

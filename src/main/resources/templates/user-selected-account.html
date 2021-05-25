@@ -128,7 +128,7 @@
                             <input type = "hidden" th:name="id" th:value = "${siteuser.userID}">
                             <i class="fas fa-envelope prefix grey-text" style="float:left;padding-top:2px;margin-right:2%;"></i>
                             <p class="h4 mb-4">New Email Address:</p>
-                            <input type="email" id="emailFormID" class="form-control" th:field="*{edit}">
+                            <input type="email" th:name="newEmail" id="emailFormID" class="form-control" th:field="*{edit}">
                         </div>
 
                         <div class="modal-footer d-flex justify-content-center">

@@ -6,7 +6,6 @@ import group03.project.web.forms.ActivityCreationForm;
 import group03.project.web.forms.ActivityJoinForm;
 import group03.project.web.lists.ReflectList;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -100,7 +99,7 @@ public class ActivityAdminController {
 
     //List all activities the user can add themselves too
     @GetMapping("/activities-signup-list")
-    public String listActivities(Model model, Authentication authentication) {
+    public String listActivities(Model model) {
         List<Activity> activities = activityService.findAllActivities();
         List<Participation> allParticipations = participationService.findAllParticipations();
         List<SiteUser> allUsers = siteUserService.findAllUsers();

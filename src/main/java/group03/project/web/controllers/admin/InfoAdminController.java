@@ -4,7 +4,6 @@ import group03.project.domain.SiteUser;
 import group03.project.services.offered.SiteUserService;
 import group03.project.web.forms.EditForm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.ui.Model;
@@ -23,11 +22,9 @@ public class InfoAdminController {
 //    private final SiteUserUpdateService userUpdateService;
 //    private final SiteUserAuditor userAuditor;
 private final SiteUserService userService;
-    private final PasswordEncoder encoder;
 
     @Autowired
-    public InfoAdminController(SiteUserService aService, PasswordEncoder theEncoder) {
-        encoder = theEncoder;
+    public InfoAdminController(SiteUserService aService) {
         userService = aService;
 
     }
@@ -108,7 +105,7 @@ private final SiteUserService userService;
         if(!result.hasErrors()) {
 
             SiteUser selectedUser = userService.findUserById(Long.parseLong(nameForm.getId())).get();
-            selectedUser.setPassword(encoder.encode("p"));
+            selectedUser.setPassword("");
             userService.updateUser(selectedUser);
 
             return "redirect:/admin/account/" + selectedUser.getUserName();

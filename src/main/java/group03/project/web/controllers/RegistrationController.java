@@ -4,8 +4,7 @@ import group03.project.domain.SiteUser;
 import group03.project.services.offered.SiteUserService;
 import group03.project.web.forms.UserCreationForm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,15 +17,13 @@ import java.sql.SQLException;
 public class RegistrationController {
 
     private final SiteUserService accountService;
-    private final PasswordEncoder encoder;
     /**
      *
      * @param aService - Selected application service for controller usage.
-     * @param theEncoder - BCrypt password encoder bean defined within SecurityConfig class
      */
     @Autowired
-    public RegistrationController(SiteUserService aService, PasswordEncoder theEncoder) {
-        encoder = theEncoder;
+    public RegistrationController(SiteUserService aService) {
+
         accountService = aService;
     }
 
@@ -134,7 +131,7 @@ public class RegistrationController {
                 newUser = new SiteUser(
                         accountForm.getEmailAddress(),
 
-                        encoder.encode(accountForm.getPassword()),
+                        accountForm.getPassword(),
                         accountForm.getUserName());
             } catch (Exception ex) {
                 return null;

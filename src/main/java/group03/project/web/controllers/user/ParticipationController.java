@@ -7,7 +7,6 @@ import group03.project.services.offered.*;
 import group03.project.web.controllers.ControllerSupport;
 import group03.project.web.forms.ReflectionButtonForm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,14 +51,14 @@ public class ParticipationController {
     }
 
     //Return the user's participations
-    @GetMapping("/all-my-participations")
-    public String listMyParticipations(Model model, Authentication authentication) {
+    @GetMapping("/my-activities")
+    public String listMyParticipations(Model model) {
         List<Participation> participations = participationService.findAllParticipations();
         List<Participation> myParticipations = new ArrayList<>();
         List<Activity> relatedActivities =  new ArrayList<>();
         List<Tag[]> allTags = new ArrayList<>();
         List<Tag[]> allThoughts = new ArrayList<>();
-        Long currentID = getCurrentID(authentication);
+        Long currentID = ControllerSupport.getUserName();
 
         //Make a list of all the participations unique to the current user
         for (int z = 0; z < participationService.getParticipationListSize(); z++) {
@@ -86,7 +85,7 @@ public class ParticipationController {
         return "all-participations";
     }
 
-    @PostMapping("/all-my-participations")
+    @PostMapping("/activity-reflection")
     public String addReflectionButton(@ModelAttribute("participation") @Valid ReflectionButtonForm editForm, Model model) {
         Reflection reflection = new Reflection();
         reflection.setParticipationID(Long.parseLong(editForm.getParticipationReflectID()));
@@ -95,12 +94,8 @@ public class ParticipationController {
     }
 
     //Get the current user's ID
-    Long getCurrentID(Authentication authentication) {
-        String currentUserName = ControllerSupport.getAuthenticatedUserName(authentication);
-        Optional<SiteUser> currentUserOptional = siteUserService.findUserByUserName(currentUserName);
-        SiteUser currentUser = currentUserOptional.get();
-        Long currentUserID = currentUser.getUserID();
+    Long getCurrentID() {
+        return ControllerSupport.getUserName();
 
-        return currentUserID;
     }
 }

@@ -7,10 +7,6 @@ import group03.project.services.offered.ObjectiveService;
 import group03.project.services.offered.SiteUserService;
 import group03.project.services.offered.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -55,6 +51,12 @@ public class HomeController {
         return "login";
     }
 
+    @PostMapping("/login")
+    public String goToDashboard() {
+
+        return "redirect:/dashboard";
+    }
+
     /**
      * Ronan implementation of adding about page - moved to controller controlling home.
      * @return about.html template page.
@@ -65,16 +67,18 @@ public class HomeController {
     }
 
     @GetMapping("/dashboard")
-    public String navigateToDashboard(@ModelAttribute("user") String user, Model model, Authentication authentication) {
+    public String navigateToDashboard(@ModelAttribute("user") String user, Model model) {
 
-        String theUser = ControllerSupport.getAuthenticatedUserName(authentication);
+        Optional<SiteUser> tempUser = siteUserService.findUserByUserName(siteUserService.findUserById(1L).get().getUserName());
+        SiteUser testUser = tempUser.get();
        /*
           String parsed onto page as attribute for Thymeleaf
          */
-        model.addAttribute("user", theUser);
+        Long currentID = ControllerSupport.getUserName();
+        model.addAttribute("user", testUser.getUserName());
             List<Participation> participations = participationService.findAllParticipations();
             List<Participation> myParticipations = new ArrayList<>();
-            Long currentID = getCurrentID(authentication);
+
 
             //Make a list of all the participations unique to the current user
             for (int z = 0; z < participationService.getParticipationListSize(); z++) {
@@ -219,7 +223,7 @@ public class HomeController {
                 /*
           Redirects user object based upon authority set, streaming into 2 different dashboard pages.
          */
-        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+        if (testUser.getUserID() == 2L) {
             return "dashboard_a";
         } else {
             return "dashboard";
@@ -239,12 +243,10 @@ public class HomeController {
         /*
           Collects current authentication found in session.
          */
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         /*
           Performs static logout method that expires all parsed session attributes.
          */
-        new SecurityContextLogoutHandler().logout(request, response, authentication);
         /*
           Redirect user back to initial localhost:8080.
          */
@@ -275,14 +277,6 @@ public class HomeController {
 //         */
 //
 //        return "redirect:";
-    }
-    Long getCurrentID(Authentication authentication) {
-        String currentUserName = ControllerSupport.getAuthenticatedUserName(authentication);
-        Optional<SiteUser> currentUserOptional = siteUserService.findUserByUserName(currentUserName);
-        SiteUser currentUser = currentUserOptional.get();
-        Long currentUserID = currentUser.getUserID();
-
-        return currentUserID;
     }
 
     @GetMapping("/403-error")

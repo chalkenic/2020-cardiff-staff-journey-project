@@ -5,8 +5,6 @@ import group03.project.services.offered.SiteUserService;
 import group03.project.web.controllers.ControllerSupport;
 import group03.project.web.forms.EditForm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.ui.Model;
@@ -21,21 +19,18 @@ import java.util.*;
 public class InfoController {
 
     private final SiteUserService userUpdateService;
-    private final PasswordEncoder encoder;
 
 
     @Autowired
-    public InfoController(group03.project.services.offered.SiteUserService anUpdateService,
-                          PasswordEncoder theEncoder) {
+    public InfoController(group03.project.services.offered.SiteUserService anUpdateService) {
         userUpdateService = anUpdateService;
-        encoder = theEncoder;
 
     }
 
     @GetMapping("/account")
-    public String userAccountDetails( Model model, Authentication authentication) {
+    public String userAccountDetails( Model model) {
 
-        String name = ControllerSupport.getAuthenticatedUserName(authentication);
+        String name = userUpdateService.findUserById(ControllerSupport.getUserName()).get().getUserName();
 
         Optional<SiteUser> aSiteUser = userUpdateService.findUserByUserName(name);
         if (aSiteUser.isPresent()) {
@@ -97,7 +92,7 @@ public class InfoController {
         if(!result.hasErrors()) {
 
             SiteUser selectedUser = userUpdateService.findUserById(Long.parseLong(nameForm.getId())).get();
-            selectedUser.setPassword(encoder.encode(nameForm.getEdit()));
+            selectedUser.setPassword(nameForm.getEdit());
             userUpdateService.updateUser(selectedUser);
         }
         return "redirect:/user/account";
