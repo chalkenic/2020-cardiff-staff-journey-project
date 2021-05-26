@@ -146,7 +146,7 @@ public class ActivityController {
     }
     //Add a participation for the official activity the user has just signed up to
     @PostMapping("/activities-signup-list")
-    public String joinActivity(@ModelAttribute("activity") @Valid ActivityJoinForm editForm, Authentication authentication) {
+    public String joinActivity(@ModelAttribute("activity") ActivityJoinForm editForm, Authentication authentication) {
         if(editForm.getActivityJoinID() == null) {
             throw new ValidationException("Activity ID can't be null");
         }

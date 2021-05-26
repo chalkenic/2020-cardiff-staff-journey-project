@@ -56,8 +56,9 @@ public class TagController {
      * @return page redirection depending on success/failure of tag creation
      */
     @PostMapping("/tag-build")
-    public String createNewTag(RedirectAttributes redirectAttributes, @ModelAttribute("tag") @Valid TagCreationForm tagForm,
+    public String createNewTag(RedirectAttributes redirectAttributes, @ModelAttribute("tag") TagCreationForm tagForm,
                                BindingResult result) {
+        System.out.println("hello?");
 
         if(!result.hasErrors()) {
             // Tag object created via parsed form data into local method createTag.
