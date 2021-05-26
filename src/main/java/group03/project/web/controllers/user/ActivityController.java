@@ -55,7 +55,7 @@ public class ActivityController {
     }
 
     //Submit the activity to the database
-    @PostMapping("/add-custom-activity")
+    @PostMapping("/custom-activity-build")
     public String submitCustomActivity(RedirectAttributes redirectAttributes, @ModelAttribute("activity")
             @Valid ActivityCreationForm activity, Authentication authentication, BindingResult result) {
         /*

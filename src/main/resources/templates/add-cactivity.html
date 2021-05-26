@@ -22,7 +22,7 @@
         <div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
             <div class="well profile" id="container-box">
                 <h1 align="center">Custom Activity Registration</h1><hr style="background-color:#333;">
-                <form id = "customActivityForm" name="customActivityForm" action="#" th:action="@{/user/add-custom-activity}" enctype="multipart/form-data" method="post" th:object="${activity}">
+                <form id = "customActivityForm" name="customActivityForm" action="#" th:action="@{/user/custom-activity-build}" enctype="multipart/form-data" method="post" th:object="${activity}">
                     <div class="form-group">
                         <h4>Activity Name</h4>
                         <input th:field = "*{name}" type="text" class="form-control" id="activity-name" name="activity-name">
