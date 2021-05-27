@@ -22,4 +22,8 @@ public interface ActivityService {
 
     public Long findMostRecentActivity();
 
+    public List<Activity> getAllOfficialActivities();
+
+    public List<Activity> getAllCustomActivities();
+
 }

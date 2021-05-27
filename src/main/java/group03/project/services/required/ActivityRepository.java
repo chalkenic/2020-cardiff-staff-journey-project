@@ -23,6 +23,12 @@ public interface ActivityRepository {
     @Query(value = "select max(activityID) from activity", nativeQuery = true)
     public Long findLastActivityID();
 
+    @Query(value = "select * from developmenttoolkit.activity where isOfficial = 1", nativeQuery = true)
+    public List<Activity> findOfficialActivities();
+
+    @Query(value = "select * from developmenttoolkit.activity where isOfficial = 0", nativeQuery = true)
+    public List<Activity> findCustomActivities();
+
 
 
 }

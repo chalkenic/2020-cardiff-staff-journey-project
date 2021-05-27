@@ -64,4 +64,16 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public Long findMostRecentActivity() { return activityRepoJDBC.findLastActivityID(); }
+
+    @Override
+    public List<Activity> getAllOfficialActivities() { return activityRepo.findOfficialActivities();
+
+    }
+
+    @Override
+    public List<Activity> getAllCustomActivities() { return activityRepo.findCustomActivities();
+
+    }
+
+
 }

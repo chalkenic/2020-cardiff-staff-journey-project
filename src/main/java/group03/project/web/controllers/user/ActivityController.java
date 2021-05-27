@@ -116,27 +116,32 @@ public class ActivityController {
             }
         }
 
-        List<Activity> officialActivities = new ArrayList<>();
-        List<Activity> customActivities = new ArrayList<>();
-        //Make sure the user can only sign up for official activities they are not already doing
-        for (int x = 0; x < activityService.getActivityListSize(); x++) {
-            Activity currentActivity = activities.get(x);
-            if(currentActivity.getIsOfficial()) {
-                if(!currentActivitiesIDs.contains(currentActivity.getActivityID())) {
-                    officialActivities.add(currentActivity);
-                }
-            }
-        }
+//        List<Activity> officialActivities = new ArrayList<>();
+//        List<Activity> customActivities = new ArrayList<>();
+//        //Make sure the user can only sign up for official activities they are not already doing
+//        for (int x = 0; x < activityService.getActivityListSize(); x++) {
+//            Activity currentActivity = activities.get(x);
+//            if(currentActivity.getIsOfficial()) {
+//                if(!currentActivitiesIDs.contains(currentActivity.getActivityID())) {
+//                    officialActivities.add(currentActivity);
+//                }
+//            }
+//        }
+//
+//
+//
+////        Make sure the user can only sign up for custom activities they are not already doing
+//        for (int x = 0; x < activityService.getActivityListSize(); x++) {
+//            Activity currentActivity = activities.get(x);
+//            if(!currentActivity.getIsOfficial()) {
+//                if(!currentActivitiesIDs.contains(currentActivity.getActivityID())) {
+//                    customActivities.add(currentActivity);
+//                }
+//            }
+//        }
 
-        //Make sure the user can only sign up for custom activities they are not already doing
-        for (int x = 0; x < activityService.getActivityListSize(); x++) {
-            Activity currentActivity = activities.get(x);
-            if(!currentActivity.getIsOfficial()) {
-                if(!currentActivitiesIDs.contains(currentActivity.getActivityID())) {
-                    customActivities.add(currentActivity);
-                }
-            }
-        }
+        List<Activity>officialActivities = activityService.getAllOfficialActivities();
+        List<Activity>customActivities = activityService.getAllCustomActivities();
 
         ActivityJoinForm editForm = new ActivityJoinForm();
         model.addAttribute("editForm", editForm);
