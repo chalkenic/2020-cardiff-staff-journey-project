@@ -153,6 +153,8 @@ GRANT INSERT, UPDATE, DELETE, SELECT ON developmenttoolkit.participation TO 'sit
 
 create index index_act on participation(Activity_activityID);
 
+creat index index_off on activity(isOfficial);
+
 -- -----------------------------------------------------
 -- Triggers
 -- -----------------------------------------------------

@@ -15,6 +15,9 @@ public interface ParticipationService {
 
     public Integer getParticipationListSize();
 
+    public List<Participation> getParticipationsByUserId(Long id);
+
     public Activity getRelatedActivity(Participation participation);
+
 
 }

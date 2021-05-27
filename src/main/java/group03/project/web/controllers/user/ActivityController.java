@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.Part;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 import java.util.ArrayList;
@@ -109,36 +110,13 @@ public class ActivityController {
         Long currentID = getCurrentID(authentication);
         //Get a list of all activities the user is currently participating in
         List<Long> currentActivitiesIDs = new ArrayList<>();
+
         for (int y = 0; y < participationService.getParticipationListSize(); y++) {
             Participation currentPart = participations.get(y);
             if(currentPart.getUserID() == currentID) {
                 currentActivitiesIDs.add(currentPart.getActivityID());
             }
         }
-
-//        List<Activity> officialActivities = new ArrayList<>();
-//        List<Activity> customActivities = new ArrayList<>();
-//        //Make sure the user can only sign up for official activities they are not already doing
-//        for (int x = 0; x < activityService.getActivityListSize(); x++) {
-//            Activity currentActivity = activities.get(x);
-//            if(currentActivity.getIsOfficial()) {
-//                if(!currentActivitiesIDs.contains(currentActivity.getActivityID())) {
-//                    officialActivities.add(currentActivity);
-//                }
-//            }
-//        }
-//
-//
-//
-////        Make sure the user can only sign up for custom activities they are not already doing
-//        for (int x = 0; x < activityService.getActivityListSize(); x++) {
-//            Activity currentActivity = activities.get(x);
-//            if(!currentActivity.getIsOfficial()) {
-//                if(!currentActivitiesIDs.contains(currentActivity.getActivityID())) {
-//                    customActivities.add(currentActivity);
-//                }
-//            }
-//        }
 
         List<Activity>officialActivities = activityService.getAllOfficialActivities();
         List<Activity>customActivities = activityService.getAllCustomActivities();

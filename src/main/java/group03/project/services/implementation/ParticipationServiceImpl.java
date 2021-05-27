@@ -42,6 +42,9 @@ public class ParticipationServiceImpl implements ParticipationService {
         return participation.size();
     }
 
+    @Override
+    public List<Participation> getParticipationsByUserId(Long id) {return  participationRepo.findParticipationsByUserId(id); }
+
     //Returns the related activity to the inputted participation
     @Override
     public Activity getRelatedActivity(Participation participation) {
@@ -55,4 +58,5 @@ public class ParticipationServiceImpl implements ParticipationService {
         }
         return foundActivity;
     }
+
 }

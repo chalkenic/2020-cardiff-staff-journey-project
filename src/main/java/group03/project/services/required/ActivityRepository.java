@@ -1,6 +1,7 @@
 package group03.project.services.required;
 
 import group03.project.domain.Activity;
+import group03.project.domain.Participation;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
@@ -28,6 +29,11 @@ public interface ActivityRepository {
 
     @Query(value = "select * from developmenttoolkit.activity where isOfficial = 0", nativeQuery = true)
     public List<Activity> findCustomActivities();
+
+//    @Query(value = "select * from activity a where a.activityid in " +
+//            "(select * from participation p where p.siteUser_userID =?1)", nativeQuery = true)
+    @Query(value = "select a.* from activity as a inner join participation as p on a.activityID = p.Activity_activityID and p.siteUser_userID = ?1", nativeQuery = true)
+    public List<Activity> findParticipatedActivitiesByUserId(Long id);
 
 
 

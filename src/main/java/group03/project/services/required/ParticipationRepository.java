@@ -1,6 +1,8 @@
 package group03.project.services.required;
 
+import group03.project.domain.Activity;
 import group03.project.domain.Participation;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,4 +14,9 @@ public interface ParticipationRepository {
     Participation save(Participation theParticipation);
 
     public Optional<Participation> findByParticipationID(Long id);
+
+    @Query(value = "select * from participation where siteuser_userid = ?1", nativeQuery = true)
+    public List<Participation> findParticipationsByUserId(Long id);
+
+
 }

@@ -75,5 +75,7 @@ public class ActivityServiceImpl implements ActivityService {
 
     }
 
+    @Override
+    public List<Activity> getAllParticipatedActivities(Long id) { return activityRepo.findParticipatedActivitiesByUserId(id); }
 
 }

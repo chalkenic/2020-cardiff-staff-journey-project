@@ -26,4 +26,6 @@ public interface ActivityService {
 
     public List<Activity> getAllCustomActivities();
 
+    public List<Activity> getAllParticipatedActivities(Long id);
+
 }

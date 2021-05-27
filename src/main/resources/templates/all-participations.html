@@ -59,7 +59,7 @@
                     <li class = "list-group-item" th:each="participation,iterStat : ${participations}">
                         <form action="#" th:action="@{/all-my-participations/}" enctype="multipart/form-data" method="post" th:object="${editForm}">
                             <p th:text = "'Activity Name: '+ ${activities[iterStat.index].name}"></p>
-<!--                            <span class="badge" th:text="${participation.activityID}"></span>-->
+
                             <p class = "tag_list">Activity UKPSF tags: </p>
 
                             <ul class = "tag_list">
