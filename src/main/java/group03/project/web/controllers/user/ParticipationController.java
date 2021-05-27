@@ -54,7 +54,7 @@ public class ParticipationController {
     //Return the user's participations
     @GetMapping("/all-my-participations")
     public String listMyParticipations(Model model, Authentication authentication) {
-        
+
         Long currentID = getCurrentID(authentication);
 
         List<Activity>participatedActivities = activityService.getAllParticipatedActivities(currentID);
