@@ -27,6 +27,6 @@ public interface ObjectiveService {
 
     List<Objective> getAllObjectives();
 
-    public Activity getAssociatedActivity(Objective objective);
+    public Activity getActivityByObjective_ActivityId(Long id);
 
 }

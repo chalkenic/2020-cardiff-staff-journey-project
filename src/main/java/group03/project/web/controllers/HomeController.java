@@ -78,94 +78,12 @@ public class HomeController {
          */
         Long currentID = getCurrentID(authentication);
 
-//            List<Participation> participations = participationService.findAllParticipations();
+
         List<Participation> userParticipations = participationService.getParticipationsByUserId(currentId);
-        List<Activity> userActivities = activityService.getAllParticipatedActivities(currentId);
+
+        List<Long> userRelatedTags = tagService.findAllTagsForUser(currentID);
 
 
-
-//            //Make a list of all the participations unique to the current user
-//            for (int z = 0; z < participationService.getParticipationListSize(); z++) {
-//                Participation participation = participations.get(z);
-//                if(participation.getUserID() == currentID) {
-//                    myParticipations.add(participation);
-//                }
-//            }
-
-
-
-            List<Participation> allParticipations = participationService.findAllParticipations();
-
-            List<Participation> t_myParticipations = new ArrayList<>();
-            List<Activity> t_myActivities = new ArrayList<>();
-            List<Long> t_tagList = new ArrayList<>();
-            //Make a list of all the tags that the current user has
-//            for (int partlist = 0; partlist < allParticipations.size(); partlist++) {
-//                Participation participation = allParticipations.get(partlist);
-//                if(participation.getUserID() == currentID) {
-//                    t_myParticipations.add(participation);
-//                }
-//            }
-
-//        for (Participation mypart : myParticipations) {
-//            t_myActivities.add(participationService.getRelatedActivity(mypart));
-//        }
-
-//        for (Object obj: objService.findObjectivesByActivityID())
-//                for (Participation mypart : t_myParticipations) {
-//                    t_myActivities.add(participationService.getRelatedActivity(mypart));
-//                }
-
-        for (Activity myact : userActivities){
-            for (Objective obj : objService.getAllObjectives()) {
-                if (objService.getAssociatedActivity(obj) == myact) {
-                    //System.out.println("Objective " + obj.getObjectiveID() + " matches " + myact.getActivityID()
-                    // + ", objective tag " + obj.getTag().getTagName() + " being added to list of tags.");
-                    t_tagList.add(tagService.findATagByID(obj.getTag().getTagID()).get().getTagID());
-                    //System.out.println("Current tag list by id: " + t_tagList);
-                }
-            }
-        }
-//                for (Activity myact : t_myActivities){
-//                        for (Objective obj : objService.getAllObjectives()) {
-//                            if (objService.getAssociatedActivity(obj) == myact) {
-//                                //System.out.println("Objective " + obj.getObjectiveID() + " matches " + myact.getActivityID()
-//                                // + ", objective tag " + obj.getTag().getTagName() + " being added to list of tags.");
-//                                t_tagList.add(tagService.findATagByID(obj.getTag().getTagID()).get().getTagID());
-//                                //System.out.println("Current tag list by id: " + t_tagList);
-//                            }
-//                        }
-//                    }
-
-
-                //new
-
-//        List<Participation> a_myParticipations = new ArrayList<>();
-//        List<Activity> a_myActivities = new ArrayList<>();
-        List<Long> a_tagList = new ArrayList<>();
-        //Make a list of all the tags that the current user has
-//        for (int partlist = 0; partlist < allParticipations.size(); partlist++) {
-//            Participation participation = allParticipations.get(partlist);
-//            a_myParticipations.add(participation);
-//        }
-//        for (Participation mypart : a_myParticipations) {
-//            a_myActivities.add(participationService.getRelatedActivity(mypart));
-//        }
-//        for (Activity myact : a_myActivities){
-//            for (Objective obj : objService.getAllObjectives()) {
-//                if (objService.getAssociatedActivity(obj) == myact) {
-//                    a_tagList.add(tagService.findATagByID(obj.getTag().getTagID()).get().getTagID());
-//                }
-//            }
-//        }
-
-        for (Activity myact : userActivities){
-            for (Objective obj : objService.getAllObjectives()) {
-                if (objService.getAssociatedActivity(obj) == myact) {
-                    a_tagList.add(tagService.findATagByID(obj.getTag().getTagID()).get().getTagID());
-                }
-            }
-        }
 
         List<String> a_tagNames_all = new ArrayList<>();
         List<String> a_tagNames_A = new ArrayList<>();
@@ -173,7 +91,8 @@ public class HomeController {
         List<String> a_tagNames_K = new ArrayList<>();
         List<String> a_tagNames_V = new ArrayList<>();
 
-        for (Long tagID : a_tagList)
+//        for (Long tagID : a_tagList)
+            for (Long tagID : userRelatedTags)
         {
             if (tagService.findATagByID(tagID).get().getIsOfficial()) {
                 if (tagService.findATagByID(tagID).get().getTagName().contains("A")){
@@ -203,25 +122,9 @@ public class HomeController {
             }
         }
 
-        /* THIS IS FOR USE WITH SEPARATE CHARTS, DATA IS GOING TO BE COLLATED INTO SINGLE
-           CHART SO NO NEED FOR THEM RIGHT NOW.
-        model.addAttribute("otagNamesA", a_tagNames_A);
-        model.addAttribute("otagNamesV", a_tagNames_V);
-        model.addAttribute("otagNamesK", a_tagNames_K);
-        model.addAttribute("otagNamesD", a_tagNames_D);
-         */
-//        model.addAttribute("participations", myParticipations);
         model.addAttribute("participations", userParticipations);
 
         model.addAttribute("otagNamesAll",a_tagNames_all);
-
-        /* These print statements are to test that the tag names are added to list
-        System.out.println("a" + a_tagNames_A);
-        System.out.println("v" + a_tagNames_V);
-        System.out.println("k" + a_tagNames_K);
-        System.out.println("d" + a_tagNames_D);
-        */
-
 
         List<Tag> allTags = tagService.findAllTags();
 
@@ -230,7 +133,8 @@ public class HomeController {
 
 
         List<String> tagNames = new ArrayList<>();
-        for (Long tagID : t_tagList)
+//        for (Long tagID : t_tagList)
+            for (Long tagID : userRelatedTags)
         {
             if (tagService.findATagByID(tagID).get().getIsOfficial()) {
                 tagNames.add(tagService.findATagByID(tagID).get().getTagName());

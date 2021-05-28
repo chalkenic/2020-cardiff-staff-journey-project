@@ -151,9 +151,12 @@ GRANT INSERT, UPDATE, SELECT ON developmenttoolkit.role TO 'siteUser'@'localhost
 GRANT INSERT, UPDATE, DELETE, SELECT ON developmenttoolkit.reflection TO 'siteUser'@'localhost';
 GRANT INSERT, UPDATE, DELETE, SELECT ON developmenttoolkit.participation TO 'siteUser'@'localhost';
 
-create index index_act on participation(Activity_activityID);
-
-creat index index_off on activity(isOfficial);
+create index index_p_act on participation(Activity_activityID);
+create index index_p_use on participation(siteUser_userID);
+create index index_o_act on objective(Activity_activityID);
+create index index_o_tag on objective(Tag_tagID);
+create index index_a_off on activity(isOfficial);
+create index index_r_par on reflection(Participation_participationID);
 
 -- -----------------------------------------------------
 -- Triggers

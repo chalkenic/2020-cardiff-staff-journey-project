@@ -6,9 +6,7 @@ import group03.project.services.required.ActivityRepositoryJDBC;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-public interface ActivityRepoJPA extends JpaRepository<Activity, Integer>, ActivityRepository, ActivityRepositoryJDBC {
+public interface ActivityRepoJPA extends JpaRepository<Activity, Integer>, ActivityRepository {
 
-    @Query(value = "select max(activityID) from activity", nativeQuery = true)
-    public Long findLastActivityID();
 
 }

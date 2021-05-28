@@ -52,4 +52,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public Optional<Tag> findATagByName(String theName) { return tagJPAConnector.findByTagName(theName); }
 
+    @Override
+    public List<Long> findAllTagsForUser(Long id) { return tagJPAConnector.findAllTagsForUser(id); }
+
 }

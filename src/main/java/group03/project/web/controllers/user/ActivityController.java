@@ -89,7 +89,7 @@ public class ActivityController {
         /*
         Create participation from data created prior.
          */
-        Participation participation = new Participation(null, activityService.findMostRecentActivity(), date, "Participant", currentUserID );
+        Participation participation = new Participation(null, activityService.findMostRecentActivity().getActivityID(), date, "Participant", currentUserID );
         /*
         Add participation to database.
          */
@@ -105,18 +105,7 @@ public class ActivityController {
     //List all activities the user can add themselves too
     @GetMapping("/activities-signup-list")
     public String listActivities(Model model, Authentication authentication) {
-        List<Activity> activities = activityService.findAllActivities();
-        List<Participation> participations = participationService.findAllParticipations();
-        Long currentID = getCurrentID(authentication);
         //Get a list of all activities the user is currently participating in
-        List<Long> currentActivitiesIDs = new ArrayList<>();
-
-        for (int y = 0; y < participationService.getParticipationListSize(); y++) {
-            Participation currentPart = participations.get(y);
-            if(currentPart.getUserID() == currentID) {
-                currentActivitiesIDs.add(currentPart.getActivityID());
-            }
-        }
 
         List<Activity>officialActivities = activityService.getAllOfficialActivities();
         List<Activity>customActivities = activityService.getAllCustomActivities();

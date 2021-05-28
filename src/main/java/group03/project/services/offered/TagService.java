@@ -53,4 +53,6 @@ public interface TagService {
     public void deleteSelectedTag(Long tagID);
 
     public Optional<Tag> findATagByName(String theName);
+
+    public List<Long> findAllTagsForUser(Long id);
 }

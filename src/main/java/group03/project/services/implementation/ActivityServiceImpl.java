@@ -3,7 +3,6 @@ package group03.project.services.implementation;
 import group03.project.domain.Activity;
 import group03.project.services.offered.ActivityService;
 import group03.project.services.required.ActivityRepository;
-import group03.project.services.offered.ActivityJDBCService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +16,6 @@ public class ActivityServiceImpl implements ActivityService {
     @Autowired
     private ActivityRepository activityRepo;
 
-    @Autowired
-    private ActivityJDBCService activityRepoJDBC;
 
     //Returns a list of all activities in the database
     @Override
@@ -63,7 +60,7 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public Long findMostRecentActivity() { return activityRepoJDBC.findLastActivityID(); }
+    public Activity findMostRecentActivity() { return activityRepo.findLastActivityID(); }
 
     @Override
     public List<Activity> getAllOfficialActivities() { return activityRepo.findOfficialActivities();

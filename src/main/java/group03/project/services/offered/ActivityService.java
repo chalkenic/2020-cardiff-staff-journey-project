@@ -20,7 +20,7 @@ public interface ActivityService {
 
     int getActivityListSize();
 
-    public Long findMostRecentActivity();
+    public Activity findMostRecentActivity();
 
     public List<Activity> getAllOfficialActivities();
 

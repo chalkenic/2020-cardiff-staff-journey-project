@@ -23,4 +23,8 @@ public class ReflectionServiceImpl implements ReflectionService {
         reflectionRepository.save(reflection);
     }
 
+    @Override
+    public List<Reflection> findUserReflectionsById(Long id) { return reflectionRepository.findUserReflections(id);
+    }
+
 }

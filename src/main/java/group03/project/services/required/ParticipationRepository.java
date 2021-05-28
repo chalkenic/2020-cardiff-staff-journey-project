@@ -15,8 +15,7 @@ public interface ParticipationRepository {
 
     public Optional<Participation> findByParticipationID(Long id);
 
-    @Query(value = "select * from participation where siteuser_userid = ?1", nativeQuery = true)
+    @Query(value = "select * from participation where siteUser_userID = ?1", nativeQuery = true)
     public List<Participation> findParticipationsByUserId(Long id);
-
 
 }
